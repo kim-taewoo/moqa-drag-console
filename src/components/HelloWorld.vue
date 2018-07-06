@@ -26,8 +26,8 @@
         </v-layout>
         <v-layout justify-center>
           <draggable @change="checkAdd" xs12 class="main-workplace" xs6 element="v-flex" v-model="workplace" :options="{draggable: '.drag-item', ghostClass:'ghost', scrollSensitivity: 80, scrollSpeed: 30, group: { name: 'questions'}}">
-            <v-card class="mx-5 my-3 secondary drag-item workplace-card" dark text v-for="(work,index) in workplace" :key="index">
-              <component :is="work.comp" :work="work"></component>
+            <v-card class="mx-5 my-3 secondary drag-item workplace-card" text v-for="(work,index) in workplace" :key="index">
+              <component :is="work.comp"></component>
             <!-- <v-tabs
               v-model="active"
               color="cyan"
@@ -68,8 +68,8 @@
 
 <script>
   import draggable from 'vuedraggable'
-  import tabs from './Tabs'
-  import simpleCard from './SimpleCard'
+  import tabs from '@/components/question_types/Tabs'
+  import simpleCard from '@/components/question_types/SimpleCard'
 
   export default {
     components: {
