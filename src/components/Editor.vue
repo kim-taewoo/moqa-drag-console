@@ -108,15 +108,15 @@
 
 <style>
   #edit-console {
-    min-height: 505px;
+    min-height: 90vh;
     width: 20%;
   }
    #main-workplace {
-     min-height: 505px;
+     min-height: 90vh;
      width: 55%;
    }
    #survey-preview {
-     min-height: 505px;
+     min-height: 90vh;
      width: 25%
    }
    .main-workplace {

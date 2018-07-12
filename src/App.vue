@@ -1,38 +1,51 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      temporary
-      v-model="drawer"
-      enable-resize-watcher
-      app
-    >
-      <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
     <v-toolbar
       app
       flat
       class="primary"
+      id="toolbar-main"
       dark
       dense
     >
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-tooltip bottom>
+        <v-toolbar-title slot="activator" class="toolbar-title">
+          <router-link to="/" tag="span" style="cursor: pointer;">MOQA!</router-link>
+        </v-toolbar-title>
+        <span>홈으로</span>
+      </v-tooltip>
       <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-tooltip bottom>
+          <v-btn icon right slot="activator">
+            <v-icon>dashboard</v-icon>
+          </v-btn>
+          <span>대시보드</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <v-btn icon slot="activator">
+            <v-icon>contact_support</v-icon>
+          </v-btn>
+          <span>모카에 문의하기</span>
+        </v-tooltip>
+        <v-menu :nudge-width="0">
+          <v-btn flat slot="activator">
+            <span class="dropdown-user">김태우</span>
+            <v-icon dark>arrow_drop_down</v-icon>
+          </v-btn>
+
+          <v-list>
+            <v-list-tile
+              v-for="item in dropdown_user"
+              :key="item"
+            >
+              <v-list-tile-title v-text="item"></v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
     </v-toolbar>
-    <v-content>
+    <v-content style="background: white;">
       <router-view/>
     </v-content>
   </v-app>
@@ -42,14 +55,14 @@
 export default {
   data () {
     return {
-      drawer: false,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      }],
-      title: 'MOQA!'
+      title: 'MOQA!',
+      dropdown_user: ['프로필', '결제 내역', '로그아웃']
     }
   },
   name: 'App'
 }
 </script>
+
+<style scoped>
+</style>
+
