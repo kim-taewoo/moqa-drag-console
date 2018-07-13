@@ -1,17 +1,30 @@
 <template>
   <v-container class="pa-0">
     <v-layout class="mt-3">
-      <v-flex xs2>
+      <v-flex xs12 sm6 md3>
         <v-select
           v-model="searchStatus"
           :items="filter_status"
           label="설문 상태 필터"
           outline
-
         ></v-select>
       </v-flex>
+      <v-flex ml-2 xs12 sm6 md3>
+        <v-text-field
+          label="제목 검색"
+          outline
+          height="60px"
+          v-model="searchTitle"
+        ></v-text-field>
+      </v-flex>
+      <v-flex text-xs-right xs12>
+        <v-btn top large class="primary">
+          <v-icon dark>add</v-icon>
+          새로 만들기
+        </v-btn>
+      </v-flex>
     </v-layout>
-    <v-layout>
+    <v-layout justify-center>
       <v-flex>
         <v-data-table
           :headers="headers"
@@ -38,11 +51,20 @@
     name: 'SurveyList',
     computed: {
       filteredSurveys() {
-        if (this.searchStatus == '모든 설문') {
+        if (this.searchStatus == '모든 설문' && this.searchTitle == '') {
           return this.loadedSurveys
-        } else {
+        } else if (this.searchStatus != '모든 설문' && this.searchTitle == '') {
           return this.loadedSurveys.filter(survey => {
             return survey.status == this.searchStatus
+          })
+        } 
+        else if (this.searchStatus != '모든 설문' && this.searchTitle ) {
+          return this.loadedSurveys.filter(survey =>{
+            return survey.status == this.searchStatus && survey.title.toLowerCase().includes(this.searchTitle.toLowerCase())
+          })
+        } else if (this.searchStatus == '모든 설문' && this.searchTitle) {
+          return this.loadedSurveys.filter(survey => {
+            return survey.title.toLowerCase().includes(this.searchTitle.toLowerCase())
           })
         }
       }
@@ -51,6 +73,7 @@
       return {
         filter_status: ['모든 설문','작성중','심사 대기중','진행중','완료'],
         searchStatus: '모든 설문',
+        searchTitle: '',
         headers: [
           {
             text: 'ID',

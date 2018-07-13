@@ -1,5 +1,11 @@
 <template>
-  <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt iure odit aliquam at corporis, consequuntur, aut animi distinctio dolorem nulla suscipit? Consectetur tempore accusamus consequatur similique quam distinctio earum amet?</h3>
+  <v-container>
+    <v-layout mt3>
+      <v-flex>
+        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, reiciendis asperiores! Ea, enim, voluptatem cum ad deserunt nesciunt corporis fuga amet est expedita nostrum dolor eum incidunt et doloribus architecto?</h2>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
