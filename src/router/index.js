@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Editor from '@/components/Editor'
 import DashBoard from '@/components/DashBoard'
+import BasicSetting from '@/components/BasicSetting'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/edit-form',
       name: 'Editor',
       component: Editor
+    },
+    {
+      path: '/basic-setting',
+      name: 'BasicSetting',
+      component: BasicSetting
     }
   ]
 })

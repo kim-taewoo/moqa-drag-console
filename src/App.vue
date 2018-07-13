@@ -17,7 +17,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-tooltip bottom>
-          <v-btn icon right slot="activator">
+          <v-btn icon right slot="activator" to="/">
             <v-icon>dashboard</v-icon>
           </v-btn>
           <span>대시보드</span>

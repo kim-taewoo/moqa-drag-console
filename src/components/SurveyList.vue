@@ -28,7 +28,7 @@
           max-width="680"
         >
           <v-card>
-            <v-container>
+            <v-container style="user-select: none;">
               <v-layout>
                 <v-card-title class="subheading">
                   <v-icon small>how_to_vote</v-icon>
@@ -37,11 +37,12 @@
               </v-layout>
               <v-layout>
                 <v-flex xs6 mr-3>
-                  <v-card>
+                  <v-card class="type-card">
                     <v-card-media
-                      :src="require('@/assets/quick.jpg')" height="200px">                      
+                      :src="require('@/assets/quick.jpg')" height="200px"
+                      @click="choseQuick">                      
                     </v-card-media>
-                    <v-card-text>
+                    <v-card-text @click="choseQuick">
                       <h3 class="text-xs-center title">퀵폴</h3>
                       <p class="text-xs-center body-1 grey--text mt-2">"빠르고 간단히 묻고 싶을 때!"</p>
                       <p class="text-xs-center body-1 mb-0">
@@ -54,11 +55,11 @@
 
                 </v-flex>
                 <v-flex xs6 ml3>
-                  <v-card>
-                    <v-card-media :src="require('@/assets/survey.jpg')" height="200px">
+                  <v-card class="type-card">
+                    <v-card-media :src="require('@/assets/survey.jpg')" height="200px" @click="choseSurvey">
 
                     </v-card-media>
-                    <v-card-text>
+                    <v-card-text @click="choseSurvey">
                       <h3 class="text-xs-center title">서베이</h3>
                       <p class="text-xs-center body-1 grey--text mt-2">"마켓 트렌드 및 학술 조사가 필요할 때!"</p>
                       <p class="text-xs-center body-1 mb-0">
@@ -81,7 +82,6 @@
         <v-data-table
           :headers="headers"
           :items="filteredSurveys"
-          hide-actions
           class="elevation-1"
         >
           <template slot="items" slot-scope="props">
@@ -101,6 +101,14 @@
 <script>
   export default {
     name: 'SurveyList',
+    methods: {
+      choseQuick () {
+        this.$router.push('/basic-setting')
+      },
+      choseSurvey () {
+        this.$router.push('/basic-setting')
+      }
+    },
     computed: {
       filteredSurveys() {
         if (this.searchStatus == '모든 설문' && this.searchTitle == '') {
@@ -131,7 +139,6 @@
           {
             text: 'ID',
             align: 'left',
-            sortable: false,
             value: 'surveyId'
           },
           { text: '제목', value: 'title', align: 'left', sortable: false},
@@ -238,5 +245,11 @@
 </script>
 
 <style>
+.type-card {
+  cursor: pointer;
+}
+.type-card:hover {
+  opacity: 0.7;
+}
 </style>
 
