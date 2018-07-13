@@ -11,17 +11,69 @@
       </v-flex>
       <v-flex ml-2 xs12 sm6 md3>
         <v-text-field
-          label="제목 검색"
+          label="제목으로 검색"
           outline
           height="60px"
           v-model="searchTitle"
         ></v-text-field>
       </v-flex>
       <v-flex text-xs-right xs12>
-        <v-btn top large class="primary">
+        <v-btn top large class="primary" @click.stop="typeDialog = true">
           <v-icon dark>add</v-icon>
           새로 만들기
         </v-btn>
+
+        <v-dialog
+          v-model="typeDialog"
+          max-width="680"
+        >
+          <v-card>
+            <v-container>
+              <v-layout>
+                <v-card-title class="subheading">
+                  <v-icon small>how_to_vote</v-icon>
+                   &nbsp 타입을 선택해 주세요!
+                </v-card-title>
+              </v-layout>
+              <v-layout>
+                <v-flex xs6 mr-3>
+                  <v-card>
+                    <v-card-media
+                      :src="require('@/assets/quick.jpg')" height="200px">                      
+                    </v-card-media>
+                    <v-card-text>
+                      <h3 class="text-xs-center title">퀵폴</h3>
+                      <p class="text-xs-center body-1 grey--text mt-2">"빠르고 간단히 묻고 싶을 때!"</p>
+                      <p class="text-xs-center body-1 mb-0">
+                        오직 1개 문항
+                      </p>
+                      <p class="text-xs-center body-1 my-0">객관식 / 순위선택형 / 별점타입</p>
+                      <p class="text-xs-center body-1 my-0">설문 등록 가능</p>
+                    </v-card-text>
+                  </v-card>
+
+                </v-flex>
+                <v-flex xs6 ml3>
+                  <v-card>
+                    <v-card-media :src="require('@/assets/survey.jpg')" height="200px">
+
+                    </v-card-media>
+                    <v-card-text>
+                      <h3 class="text-xs-center title">서베이</h3>
+                      <p class="text-xs-center body-1 grey--text mt-2">"마켓 트렌드 및 학술 조사가 필요할 때!"</p>
+                      <p class="text-xs-center body-1 mb-0">
+                        2개 이상의 문항
+                      </p>
+                      <p class="text-xs-center body-1 my-0">보상리워드 지정</p>
+                      <p class="text-xs-center body-1 my-0">모든 타입의 설문 등록 가능</p>
+                    </v-card-text>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
+
+          </v-card>
+        </v-dialog>
       </v-flex>
     </v-layout>
     <v-layout justify-center>
@@ -74,6 +126,7 @@
         filter_status: ['모든 설문','작성중','심사 대기중','진행중','완료'],
         searchStatus: '모든 설문',
         searchTitle: '',
+        typeDialog: false,
         headers: [
           {
             text: 'ID',
