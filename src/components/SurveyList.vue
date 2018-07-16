@@ -1,24 +1,26 @@
 <template>
   <v-container class="pa-0">
-    <v-layout class="mt-3">
-      <v-flex xs12 sm6 md3>
+    <v-layout class="mt-2" wrap>
+      <v-flex xs12 sm6 md3 pa-2>
         <v-select
           v-model="searchStatus"
           :items="filter_status"
           label="설문 상태 필터"
           outline
+          hide-details
         ></v-select>
       </v-flex>
-      <v-flex ml-2 xs12 sm6 md3>
+      <v-flex xs12 sm6 md3 pa-2>
         <v-text-field
           label="제목으로 검색"
           outline
           height="60px"
           v-model="searchTitle"
+          hide-details
         ></v-text-field>
       </v-flex>
-      <v-flex text-xs-right xs12>
-        <v-btn top large class="primary" @click.stop="typeDialog = true">
+      <v-flex text-xs-right xs12 md3 offset-md3>
+        <v-btn :top="$vuetify.breakpoint.mdAndUp" :block="$vuetify.breakpoint.xsOnly" large class="primary" @click.stop="typeDialog = true">
           <v-icon dark>add</v-icon>
           새로 만들기
         </v-btn>
@@ -32,7 +34,7 @@
               <v-layout>
                 <v-card-title class="subheading">
                   <v-icon small>how_to_vote</v-icon>
-                   &nbsp 타입을 선택해 주세요!
+                  &nbsp 타입을 선택해 주세요!
                 </v-card-title>
               </v-layout>
               <v-layout>
@@ -89,6 +91,7 @@
             <td class="text-xs-left">{{ props.item.title }}</td>
             <td class="text-xs-right">{{ props.item.num_participate }}</td>
             <td class="text-xs-right">{{ props.item.num_max_participate }}</td>
+            <td class="text-xs-right">{{ props.item.num_distribute }}</td>
             <td class="text-xs-right">{{ props.item.time_period }}</td>
             <td class="text-xs-right">{{ props.item.status }}</td>
           </template>
@@ -144,6 +147,7 @@
           { text: '제목', value: 'title', align: 'left', sortable: false},
           { text: '참여인원', value: 'num_participate', align: 'right' },
           { text: '최대참여인원', value: 'num_max_participate', align: 'right' },
+          { text: '배포인원', value: 'num_distribute', align: 'right' },
           { text: '설문기간', value: 'time_period', align: 'right' },
           { text: '상태', value: 'status', align: 'right' }
         ],
@@ -154,6 +158,7 @@
             title: '예시 제목 1',
             num_max_participate: 120,
             num_participate: 24,
+            num_distribute: 1120,
             time_period: '2018-07-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '작성중'
           },
@@ -163,6 +168,7 @@
             title: '예시 제목 2',
             num_max_participate: 99,
             num_participate: 37,
+            num_distribute: 1230,
             time_period: '2018-07-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '심사 대기중'
           },
@@ -172,6 +178,7 @@
             title: '예시 제목 3',
             num_max_participate: 33,
             num_participate: 23,
+            num_distribute: 820,
             time_period: '2018-07-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '진행중'
           },
@@ -181,6 +188,7 @@
             title: '예시 제목 4',
             num_max_participate: 98,
             num_participate: 67,
+            num_distribute: 1520,
             time_period: '2018-07-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '완료'
           },
@@ -190,6 +198,7 @@
             title: '예시 제목 5',
             num_max_participate: 75,
             num_participate: 49,
+            num_distribute: 880,
             time_period: '2018-09-01 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '작성중'
           },
@@ -199,6 +208,7 @@
             title: '예시 제목 6',
             num_max_participate: 96,
             num_participate: 94,
+            num_distribute: 2020,
             time_period: '2018-02-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '진행중'
           },
@@ -208,6 +218,7 @@
             title: '예시 제목 7',
             num_max_participate: 160,
             num_participate: 98,
+            num_distribute: 1777,
             time_period: '2018-07-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '심사대기중'
           },
@@ -217,6 +228,7 @@
             title: '예시 제목 8',
             num_max_participate: 444,
             num_participate: 87,
+            num_distribute: 3230,
             time_period: '2018-08-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '진행중'
           },
@@ -226,6 +238,7 @@
             title: '예시 제목 9',
             num_max_participate: 214,
             num_participate: 51,
+            num_distribute: 1122,
             time_period: '2018-07-12 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '작성중'
           },
@@ -235,6 +248,7 @@
             title: '예시 제목 10',
             num_max_participate: 424,
             num_participate: 65,
+            num_distribute: 1127,
             time_period: '2018-07-15 00:00:00.0 ~ 2018-08-12 00:00:00.0',
             status: '완료'
           }
