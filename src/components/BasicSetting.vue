@@ -114,7 +114,7 @@
                                       </v-date-picker>
                                   </v-menu>
                                 </v-flex>
-                            
+                                <!-- 날짜 및 '리워드' 유효하지 않은 값을 입력했을 경우 경고 후 리셋 하도록 로직 설정이 필요함 -->
                                 <v-flex xs9 mt-3>
                                   <v-slider
                                     v-model="reward"
@@ -200,7 +200,7 @@
 
 
                   <v-flex xs12 sm10 md8 lg6 :class="{'mt-3': $vuetify.breakpoint.mdAndDown}">
-                    <h3><v-icon>face</v-icon> 응답 대상자 설정</h3>
+                    <h3><v-icon>how_to_reg</v-icon> 응답 대상자 설정</h3>
                     <v-card class="mt-2">
                       <v-card-text>
                         <form>
