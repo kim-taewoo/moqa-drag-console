@@ -225,11 +225,68 @@
                               <v-flex xs12>
                                 <v-autocomplete
                                   ref="targetGroup"
-                                  :rules="[() => !!targetGroup || '필수 입력란입니다.']"
                                   :items="targetGroups"
                                   v-model="targetGroup"
-                                  label="나의 맞춤타겟에서 가져오기"
+                                  label="나의 맞춤타겟 가져오기"
                                 ></v-autocomplete>
+                              </v-flex>
+                              <v-flex class="xs9">
+                                <v-text-field readonly disabled label="새로 대상 설정하기">
+
+                                </v-text-field>
+                              </v-flex>
+                              <v-flex class="xs3">
+                                <v-dialog v-model="newTargetDialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+                                  <v-btn slot="activator" color="primary">설정</v-btn>
+                                  <v-card>
+                                    <v-toolbar dark color="primary">
+                                      <v-btn icon dark @click.native="newTargetDialog = false">
+                                        <v-icon>close</v-icon>
+                                      </v-btn>
+                                      <v-toolbar-title>설문 타겟 설정</v-toolbar-title>
+                                      <v-spacer></v-spacer>
+                                      <v-toolbar-items>
+                                        <v-btn dark flat @click.native="newTargetDialog = false">저장하기</v-btn>
+                                      </v-toolbar-items>
+                                    </v-toolbar>
+                                    <v-container :class="{'px-0': $vuetify.breakpoint.mdAndDown}">
+                                      <v-layout row wrap>
+                                        <v-flex>
+                                          <v-list subheader>
+                                            <v-subheader>General</v-subheader>
+                                            <v-list-tile avatar>
+                                              <v-list-tile-action>
+                                                <v-checkbox v-model="notifications"></v-checkbox>
+                                              </v-list-tile-action>
+                                              <v-list-tile-content>
+                                                <v-list-tile-title>Notifications</v-list-tile-title>
+                                                <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded</v-list-tile-sub-title>
+                                              </v-list-tile-content>
+                                            </v-list-tile>
+                                            <v-list-tile avatar>
+                                              <v-list-tile-action>
+                                                <v-checkbox v-model="sound"></v-checkbox>
+                                              </v-list-tile-action>
+                                              <v-list-tile-content>
+                                                <v-list-tile-title>Sound</v-list-tile-title>
+                                                <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply</v-list-tile-sub-title>
+                                              </v-list-tile-content>
+                                            </v-list-tile>
+                                            <v-list-tile avatar>
+                                              <v-list-tile-action>
+                                                <v-checkbox v-model="widgets"></v-checkbox>
+                                              </v-list-tile-action>
+                                              <v-list-tile-content>
+                                                <v-list-tile-title>Auto-add widgets</v-list-tile-title>
+                                                <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+                                              </v-list-tile-content>
+                                            </v-list-tile>
+                                          </v-list>
+                                        </v-flex>
+                                      </v-layout>
+                                    </v-container>
+                                  </v-card>
+                                </v-dialog>
                               </v-flex>
                             </v-layout>
                           </v-container>
@@ -306,7 +363,8 @@
       dateFormattedEnd: null,
       menu1: false,
       menu2: false,
-      maxParticipate: 1000
+      maxParticipate: 1000,
+      newTargetDialog: false
       }
     },
     computed: {
