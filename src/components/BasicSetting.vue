@@ -26,71 +26,149 @@
           </v-stepper-header>
 
           <v-stepper-items style="height: 100%">
-            <v-stepper-content step="1" style="height:100%; background:#eee">
-              <v-container :class="{'pa-0': $vuetify.breakpoint.smAndDown}">
-                <v-layout justify-center>
+            <v-stepper-content step="1" style="height:100%;">
+              <v-container :class="{'pa-0': $vuetify.breakpoint.smAndDown}" grid-list-lg>
+                <v-layout justify-center wrap>
                   <v-flex xs12 sm10 md8 lg6>
-                    <h3 class="headline pa-2"><v-icon class="black--text">create</v-icon> 시작하기</h3>
-                    <v-card ref="form">
-                      <v-card-text>
+                    <h3><v-icon>create</v-icon> 기본사항</h3>
+                    <v-card ref="form" class="mt-2">
+                      <v-card-text>                                                  
                         <form action="">
-                          <v-text-field
-                            ref="title"
-                            v-model="title"
-                            :rules="[
-                              () => !!title || '필수 입력란입니다.',
-                              () => !!title && title.length <=25 || '제목은 30자보다 길 수 없습니다.'
-                            ]"
-                            :error-messages="errorMessages"
-                            label="설문 제목"
-                            placeholder="프로젝트 이름을 정해주세요"
-                            required
-                            counter="30"
-                          ></v-text-field>
-                          <v-text-field
-                            ref="reward"
-                            :rules="[
-                              () => !!reward || '필수 입력란입니다.',
-                              addressCheck
-                            ]"
-                            v-model="reward"
-                            label="지급 리워드"
-                            placeholder="설문 리워드를 설정해주세요"
-                            required
-                          ></v-text-field>
-                          <v-text-field
-                            ref="city"
-                            :rules="[() => !!city || '필수 입력란입니다.', addressCheck]"
-                            v-model="city"
-                            label=""
-                            placeholder="자격요건이 안 될 때 리워드를 설정해주세요."
-                            required
-                          ></v-text-field>
-                          <v-text-field
-                            ref="state"
-                            v-model="state"
-                            :rules="[() => !!state || '필수 입력란입니다.']"
-                            label="State/Province/Region"
-                            required
-                            placeholder="TX"
-                          ></v-text-field>
-                          <v-text-field
-                            ref="zip"
-                            :rules="[() => !!zip || '필수 입력란입니다.']"
-                            v-model="zip"
-                            label="ZIP / Postal Code"
-                            required
-                            placeholder="79938"
-                          ></v-text-field>
-                          <v-autocomplete
-                            ref="country"
-                            :rules="[() => !!country || '필수 입력란입니다.']"
-                            :items="countries"
-                            v-model="country"
-                            label="Country"
-                            placeholder="Select..."
-                            required
-                          ></v-autocomplete>
+                          <v-container py-0 grid-list-md >
+                            <v-layout row wrap>  
+                                <v-flex xs12>
+                                  <v-text-field
+                                    ref="title"
+                                    v-model="title"
+                                    :rules="[
+                                      () => !!title || '필수 입력란입니다.',
+                                      () => !!title && title.length <=25 || '제목은 30자보다 길 수 없습니다.'
+                                    ]"
+                                    :error-messages="errorMessages"
+                                    label="프로젝트 이름"
+                                    required
+                                    counter="30"
+                                  ></v-text-field>
+                                </v-flex>
+
+                                <v-flex xs12 lg6>
+                                  <v-menu
+                                    ref="menu1"
+                                    :close-on-content-click="false" 
+                                    v-model="menu1"
+                                    :nudge-right="40"
+                                    lazy
+                                    transition="scale-transition"
+                                    offset-y
+                                    full-width
+                                    max-width="290px"
+                                    min-width="290px"
+                                  >
+                                    <v-text-field
+                                      slot="activator"
+                                      v-model="dateFormatted"
+                                      label="시작하는 날"
+                                      hint="예) 20XX-XX-XX"
+                                      persistent-hint
+                                      prepend-icon="event"
+                                      @blur="date = parseDate(dateFormatted)"
+                                    ></v-text-field>
+                                    <v-date-picker 
+                                      v-model="date" 
+                                      no-title 
+                                      locale="ko-kr" 
+                                      @input="menu1 = false"
+                                      :min="new Date(new Date().setDate(new Date().getDate()-1)).toJSON()">
+                                    </v-date-picker>
+                                  </v-menu>
+                                </v-flex>
+
+                                <v-flex xs12 lg6>
+                                  <v-menu
+                                    ref="menu2"
+                                    :close-on-content-click="false" 
+                                    v-model="menu2"
+                                    :nudge-right="40"
+                                    lazy
+                                    transition="scale-transition"
+                                    offset-y
+                                    full-width
+                                    max-width="290px"
+                                    min-width="290px"
+                                  >
+                                    <v-text-field
+                                      slot="activator"
+                                      v-model="dateFormattedEnd"
+                                      label="끝나는 날"
+                                      hint="예) 20XX-XX-XX"
+                                      persistent-hint
+                                      prepend-icon="event"
+                                      @blur="date2 = parseDate(dateFormattedEnd)"
+                                    ></v-text-field>
+                                    <v-date-picker 
+                                      v-model="date2" 
+                                      no-title 
+                                      locale="ko-kr" 
+                                      @input="menu2 = false"
+                                      :min="dateFormatted">
+                                      </v-date-picker>
+                                  </v-menu>
+                                </v-flex>
+                            
+                                <v-flex xs9 mt-3>
+                                  <v-slider
+                                    v-model="reward"
+                                    :max="500"
+                                    label="답변 리워드"
+                                    thumb-label="always"
+                                  >
+                                  </v-slider>
+                                </v-flex>
+                                <v-flex xs3 mt-3>
+                                  <v-text-field
+                                    v-model="reward"
+                                    class="mt-0"
+                                    type="number"
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs9>
+                                  <v-slider
+                                    v-model="stopReward"
+                                    :max= reward
+                                    label="중단 리워드"
+                                    thumb-label="always"
+                                  >
+                                  </v-slider>
+                                </v-flex>
+                                <v-flex xs3>
+                                  <v-text-field
+                                    v-model="stopReward"
+                                    class="mt-0"
+                                    type="number"
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                  <v-text-field
+                                    ref="state"
+                                    v-model="state"
+                                    :rules="[() => !!state || '필수 입력란입니다.']"
+                                    label="설문 기관"
+                                    required
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                  <v-textarea
+                                    name="input-7-1"
+                                    label="설문 설명"
+                                    auto-grow
+                                    v-model="description"
+                                    row-height="12"
+                                  ></v-textarea>
+                                </v-flex>
+
+
+                            </v-layout>
+                          </v-container>
                         </form>
                       </v-card-text>
 
@@ -119,7 +197,48 @@
                         </v-card-actions> -->
                     </v-card>
                   </v-flex>
+
+
+                  <v-flex xs12 sm10 md8 lg6 :class="{'mt-3': $vuetify.breakpoint.mdAndDown}">
+                    <h3><v-icon>face</v-icon> 응답 대상자 설정</h3>
+                    <v-card class="mt-2">
+                      <v-card-text>
+                        <form>
+                          <v-container py-0 grid-list-md>
+                            <v-layout row wrap>
+                              <v-flex xs9 mt-3>
+                                <v-slider
+                                  v-model="maxParticipate"
+                                  :max="5000"
+                                  label="최대 참여 인원"
+                                  thumb-label="always"
+                                >
+                                </v-slider>
+                              </v-flex>
+                              <v-flex xs3 mt-3>
+                                <v-text-field
+                                  v-model="maxParticipate"
+                                  class="mt-0"
+                                  type="number"
+                                ></v-text-field>
+                              </v-flex>
+                              <v-flex xs12>
+                                <v-autocomplete
+                                  ref="targetGroup"
+                                  :rules="[() => !!targetGroup || '필수 입력란입니다.']"
+                                  :items="targetGroups"
+                                  v-model="targetGroup"
+                                  label="나의 맞춤타겟에서 가져오기"
+                                ></v-autocomplete>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </form>
+                      </v-card-text>
+                    </v-card>
+                  </v-flex>
                 </v-layout>
+
               </v-container>
             </v-stepper-content>
 
@@ -165,16 +284,29 @@
             disabled: true
           }
         ],
-        e1: 0,
-        countries: ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', "Timor L'Este", 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'],
+      e1: 0,
+      targetGroups: [
+        "나의 맞춤타겟1",
+        "나의 맞춤타겟2",
+        "나의 맞춤타겟3",
+        "나의 맞춤타겟4",
+        "나의 맞춤타겟5"
+      ],
+      targetGroup: null,
       errorMessages: [],
       title: null, 
-      address: null,
-      city: null,
       state: null,
-      zip: null,
-      country: null,
-      formHasErrors: false
+      description: null,
+      formHasErrors: false,
+      reward: 5,
+      stopReward: 0,
+      date: null,
+      date2: null,
+      dateFormatted: null,
+      dateFormattedEnd: null,
+      menu1: false,
+      menu2: false,
+      maxParticipate: 1000
       }
     },
     computed: {
@@ -187,11 +319,20 @@
           zip: this.zip,
           country: this.country
         }
+      },
+      computedDateFormatted () {
+        return this.formatDate(this.date)
       }
     },
     watch: {
       name () {
         this.errorMessages = []
+      },
+      date (val) {
+        this.dateFormatted = this.date
+      },
+      date2 (val) {
+        this.dateFormattedEnd = this.date2
       }
     },
     methods: {
@@ -218,6 +359,18 @@
 
           this.$refs[f].validate(true)
         })
+      },
+      // formatDate (date) {
+      //   if (!date) return null
+
+      //   const [year, month, day] = date.split('-')
+      //   return `${year}-${month}-${day}`
+      // },
+      parseDate (date) {
+        if (!date) return null
+
+        const [year, month, day] = date.split('-')
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
       }
     }
   }
