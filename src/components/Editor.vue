@@ -1,67 +1,69 @@
 <template>
-  <v-container fluid full-height class="pa-2">
+  <v-container fluid class="pa-2">
     <v-layout>
-      <v-card id="edit-console" class="ma-2 pa-2" height="100%">
-        <v-layout row wrap>
-          <v-flex xs12>
-            <h2 class="primary--text text--darken-2 mx-1">편집 툴</h2>
-          </v-flex>
-        </v-layout>
-        <v-layout>
-          <draggable @start="isDragging=true" @end="isDragging=false" xs12 element="v-flex" v-model="types" :options="{draggable: '.drag-item', sort: false, ghostClass:'ghost', group:{ name: 'questions', pull: 'clone', put: false}}">
-            <v-card :id="type.id" class="ma-1 pa-1 secondary drag-item console-card" dark text v-for="(type, index) in types" :key="index">
-              <v-card-title class="py-0 px-1">
-                <v-icon>add</v-icon>
-                <div class="title">{{ type.title }}</div>
-              </v-card-title>
-            </v-card>
-          </draggable>
-        </v-layout>
-      </v-card>
-      <v-card id="main-workplace" class="ma-2 pa-2" height="100%">
-        <v-layout>
-          <v-flex xs12>
-            <h2 class="primary--text text--darken-2 mx-1">작업 공간</h2>
-          </v-flex>
-        </v-layout>
-        <v-layout justify-center>
-          <draggable @change="checkAdd" xs12 class="main-workplace" xs6 element="v-flex" v-model="workplace" :options="{draggable: '.drag-item', ghostClass:'ghost', scrollSensitivity: 80, scrollSpeed: 30, group: { name: 'questions'}}">
-            <v-card class="mx-5 my-3 secondary drag-item workplace-card" text v-for="(work,index) in workplace" :key="index">
-              <component :is="work.comp"></component>
-            <!-- <v-tabs
-              v-model="active"
-              color="cyan"
-              dark
-              slider-color="yellow"
-            >
-              <v-tab
-                v-for="n in 3"
-                :key="n"
-                ripple
-              >
-                Item {{ work.title }}
+      <v-flex class="xs2">
+        <v-card id="edit-console" class="ma-2 pa-2">
+          <v-layout row wrap>
+            <v-flex xs12>
+              <h2 class="primary--text text--darken-2 mx-1">질문 카드</h2>
+            </v-flex>
+            <v-flex class="xs12"><v-divider></v-divider></v-flex>
+          </v-layout>
+          <v-layout>
+            <draggable @start="isDragging=true" @end="isDragging=false" xs12 element="v-flex" v-model="types" :options="{draggable: '.drag-item', sort: false, ghostClass:'ghost', group:{ name: 'questions', pull: 'clone', put: false}}">
+              <v-card :id="type.id" class="mx-1 my-2 pa-2 drag-item" text v-for="(type, index) in types" :key="index" style="cursor:pointer;">
+                <v-card-title class="py-0 px-1">
+                  <v-icon>add</v-icon>
+                  <div class="title">{{ type.title }}</div>
+                </v-card-title>
+              </v-card>
+            </draggable>
+          </v-layout>
+        </v-card>
+      </v-flex>
+      <v-flex class="xs10">
+        <v-card id="main-workplace" class="ma-2 pa-2" height="100%">
+          <v-container>
+            <v-layout justify-center>
+              <draggable xs12 md6 lg7 @change="checkAdd" class="main-workplace" element="v-flex" v-model="workplace" :options="{draggable: '.drag-item', ghostClass:'ghost', scrollSensitivity: 80, scrollSpeed: 30, group: { name: 'questions'}}">
+                <v-card class="mx-5 my-3 secondary drag-item workplace-card" text v-for="(work,index) in workplace" :key="index">
+                  <component :is="work.comp"></component>
+                <!-- <v-tabs
+                  v-model="active"
+                  color="cyan"
+                  dark
+                  slider-color="yellow"
+                >
+                  <v-tab
+                    v-for="n in 3"
+                    :key="n"
+                    ripple
+                  >
+                    Item {{ work.title }}
 
-              </v-tab>
-              <v-tab-item
-                v-for="n in 3"
-                :key="n"
-              >
-                <v-card flat>
-                  <v-card-text>{{ text }}</v-card-text>
+                  </v-tab>
+                  <v-tab-item
+                    v-for="n in 3"
+                    :key="n"
+                  >
+                    <v-card flat>
+                      <v-card-text>{{ text }}</v-card-text>
+                    </v-card>
+                  </v-tab-item>
+                </v-tabs> -->
                 </v-card>
-              </v-tab-item>
-            </v-tabs> -->
-            </v-card>
-          </draggable>
-        </v-layout>
-      </v-card>
-      <v-card id="survey-preview" class="ma-2 pa-2" height="100%">
-        <v-layout row wrap>
-          <v-flex xs12>
-            <h2 class="primary--text text--darken-2 mx-1">미리보기</h2>
-          </v-flex>
-        </v-layout>
-      </v-card>
+              </draggable>
+            </v-layout>
+          </v-container>
+        </v-card>
+        <!-- <v-card id="survey-preview" class="ma-2 pa-2" height="100%">
+          <v-layout row wrap>
+            <v-flex xs12>
+              <h2 class="primary--text text--darken-2 mx-1">미리보기</h2>
+            </v-flex>
+          </v-layout>
+        </v-card> -->
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -107,20 +109,8 @@
 </script>
 
 <style>
-  #edit-console {
-    min-height: 90vh;
-    width: 20%;
-  }
-   #main-workplace {
-     min-height: 90vh;
-     width: 55%;
-   }
-   #survey-preview {
-     min-height: 90vh;
-     width: 25%
-   }
    .main-workplace {
-     min-height: 200px;
+     min-height: 280px;
    }
    .ghost {
     opacity: .5;

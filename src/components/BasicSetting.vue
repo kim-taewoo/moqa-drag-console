@@ -17,7 +17,7 @@
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="e1 > 2" step="2" editable>설문 디자인</v-stepper-step>
+            <v-stepper-step :complete="e1 > 2" step="2">설문 디자인</v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -255,11 +255,11 @@
                                       타겟설정
                                       <v-spacer></v-spacer>
                                       <v-dialog max-width="290" persistent v-model="addTargetDialog">
-                                        <v-btn slot="activator" flat dark>현재 설정 맞춤타겟에 추가</v-btn>
+                                        <v-btn slot="activator" flat dark>현재 설정을 맞춤타겟에 추가</v-btn>
                                         <v-card>
-                                          <v-card-title>맞춤타겟에 추가</v-card-title>
+                                          <v-card-title class="subheading">맞춤타겟에 추가</v-card-title>
                                           <v-card-text>
-                                            <v-text-field v-model="addedTargetGroup" counter="25" label="맞춤타겟 이름"></v-text-field>
+                                            <v-text-field v-model="addedTargetGroup" counter="25" label="타겟 이름"></v-text-field>
                                           </v-card-text>
                                           <v-card-actions>
                                             <v-spacer></v-spacer>
@@ -369,16 +369,11 @@
               </v-container>
             </v-stepper-content>
 
-            <v-stepper-content step="2">
-              <v-card
-                class="mb-5"
-                color="grey lighten-1"
-                height="80vh"
-              ></v-card>
-
+            <v-stepper-content class="pa-0" step="2" style="height: 100%">
+              <Editor />
             </v-stepper-content>
 
-            <v-stepper-content step="3">
+            <v-stepper-content step="3" style="height: 100%">
               <v-card
                 class="mb-5"
                 color="grey lighten-1"
@@ -393,8 +388,13 @@
 </template>
 
 <script>
+import Editor from '@/components/Editor'
+
   export default {
     name: 'BasicSetting',
+    components: {
+      Editor
+    },
     data () {
       return {
         items: [
@@ -578,6 +578,7 @@
 .v-stepper__wrapper {
   width: 100%;
   height: 100%;
+  min-height: 100%;
 }
 .v-list-tile {
   justify-content: flex-start;
