@@ -4,6 +4,7 @@
       <v-flex xs12>
         <v-stepper v-model="e1" style="height: 100%;">
           <v-stepper-header>
+
             <!-- 작은 화면에서 사라지게 하고 밑으로 위치를 옮길 필요가 있음 -->
             <div class="stepper-header-header justify-center">
               <v-badge left color="green">
@@ -11,18 +12,21 @@
                 <h3 class="title">설문 제목</h3>
               </v-badge>
             </div>
-            <v-stepper-step :complete="e1 > 1" step="1">기본 설정</v-stepper-step>
+
+            <v-stepper-step :complete="e1 > 1" step="1" editable>기본 설정</v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="e1 > 2" step="2">설문 디자인</v-stepper-step>
+            <v-stepper-step :complete="e1 > 2" step="2" editable>설문 디자인</v-stepper-step>
 
             <v-divider></v-divider>
 
             <v-stepper-step step="3">배포하기</v-stepper-step>
+
             <div class="stepper-header-footer justify-end">
               <v-btn v-show="e1 !=3" class="primary" @click="e1++">다음 <v-icon>arrow_forward</v-icon></v-btn>
             </div>
+
           </v-stepper-header>
 
           <v-stepper-items style="height: 100%">
@@ -230,61 +234,127 @@
                                   label="나의 맞춤타겟 가져오기"
                                 ></v-autocomplete>
                               </v-flex>
-                              <v-flex class="xs9">
-                                <v-text-field readonly disabled label="새로 대상 설정하기">
+                              <v-flex class="xs9" @click.stop="newTargetDialog = true">
+                                <v-text-field readonly disabled label="새로 대상 설정하기" >
 
                                 </v-text-field>
                               </v-flex>
                               <v-flex class="xs3">
-                                <v-dialog v-model="newTargetDialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-                                  <v-btn slot="activator" color="primary">설정</v-btn>
+                                <v-dialog v-model="newTargetDialog" scrollable persistent fullscreen hide-overlay transition="dialog-bottom-transition">
+                                  <v-btn slot="activator" color="primary" ref="newTargetBtn">설정</v-btn>
                                   <v-card>
-                                    <v-toolbar dark color="primary">
+                                    <!-- <v-toolbar class="primary" dark dense>
+                                      <v-toolbar-title>타겟 설정</v-toolbar-title>
+                                      <v-spacer></v-spacer>
                                       <v-btn icon dark @click.native="newTargetDialog = false">
                                         <v-icon>close</v-icon>
                                       </v-btn>
-                                      <v-toolbar-title>설문 타겟 설정</v-toolbar-title>
+                                    </v-toolbar> -->
+                                    <v-card-title class="primary white--text title">
+                                      <v-icon dark>people</v-icon>
+                                      타겟설정
                                       <v-spacer></v-spacer>
-                                      <v-toolbar-items>
-                                        <v-btn dark flat @click.native="newTargetDialog = false">저장하기</v-btn>
-                                      </v-toolbar-items>
-                                    </v-toolbar>
-                                    <v-container :class="{'px-0': $vuetify.breakpoint.mdAndDown}">
-                                      <v-layout row wrap>
-                                        <v-flex>
-                                          <v-list subheader>
-                                            <v-subheader>General</v-subheader>
-                                            <v-list-tile avatar>
-                                              <v-list-tile-action>
-                                                <v-checkbox v-model="notifications"></v-checkbox>
-                                              </v-list-tile-action>
-                                              <v-list-tile-content>
-                                                <v-list-tile-title>Notifications</v-list-tile-title>
-                                                <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded</v-list-tile-sub-title>
-                                              </v-list-tile-content>
-                                            </v-list-tile>
-                                            <v-list-tile avatar>
-                                              <v-list-tile-action>
-                                                <v-checkbox v-model="sound"></v-checkbox>
-                                              </v-list-tile-action>
-                                              <v-list-tile-content>
-                                                <v-list-tile-title>Sound</v-list-tile-title>
-                                                <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply</v-list-tile-sub-title>
-                                              </v-list-tile-content>
-                                            </v-list-tile>
-                                            <v-list-tile avatar>
-                                              <v-list-tile-action>
-                                                <v-checkbox v-model="widgets"></v-checkbox>
-                                              </v-list-tile-action>
-                                              <v-list-tile-content>
-                                                <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-                                                <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-                                              </v-list-tile-content>
-                                            </v-list-tile>
-                                          </v-list>
-                                        </v-flex>
-                                      </v-layout>
-                                    </v-container>
+                                      <v-dialog max-width="290" persistent v-model="addTargetDialog">
+                                        <v-btn slot="activator" flat dark>현재 설정 맞춤타겟에 추가</v-btn>
+                                        <v-card>
+                                          <v-card-title>맞춤타겟에 추가</v-card-title>
+                                          <v-card-text>
+                                            <v-text-field v-model="addedTargetGroup" counter="25" label="맞춤타겟 이름"></v-text-field>
+                                          </v-card-text>
+                                          <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="green darken-1" flat @click.native="addTargetDialog = false">취소</v-btn>
+                                            <v-btn color="green darken-1" flat @click.native="addTargetDialog = false">저장</v-btn>
+                                          </v-card-actions>
+                                        </v-card>
+                                      </v-dialog>
+                                      <v-btn dark class="subheading" flat @click.native="newTargetDialog = false">
+                                        적용하기
+                                      </v-btn>
+                                    </v-card-title>
+                                    <v-divider></v-divider>
+                                    <v-card-text>
+                                      <v-container class="pa-0">
+                                        <v-layout justify-center>
+                                          <v-flex xs12 sm10 md8>
+                                            <template v-for="(item, index) in newTargetOptions">
+                                              <v-subheader v-if="item.header" :key="item.header" class="primary--text">{{ item.header }}</v-subheader>
+                                              <div class="px-3" v-else-if="item.options" :key="index">
+                                                <v-layout wrap>
+                                                  <v-flex xs12 wrap sm4 v-for="(option,index2) in item.options" :key="index2">
+                                                    <v-checkbox :label="option" hide-details></v-checkbox>
+                                                  </v-flex>
+                                                </v-layout>
+                                              </div>
+                                              <v-divider v-else-if="item.divider" :key="index"></v-divider>
+                                            </template>
+                                            <v-layout wrap>
+                                              <v-flex xs12 class="px-3">
+                                                <v-subheader class="px-0 primary--text">직업</v-subheader>
+                                                <!-- <v-autocomplete
+                                                  ref="job"
+                                                  :items="jobs"
+                                                  v-model="job"
+                                                  label="직업군 검색하기"
+                                                ></v-autocomplete> -->
+                                                <v-layout wrap>
+                                                    <v-flex xs12 sm4 v-for="(job,index) in jobs" :key="index">
+                                                      <v-checkbox :label="job" :value="job" v-model="selectedJob" hide-details></v-checkbox>
+                                                    </v-flex>
+                                                </v-layout>
+                                              </v-flex>
+                                              <v-flex xs12>
+                                                <v-divider></v-divider>
+                                              </v-flex>
+                                              <v-flex xs12 class="px-3">
+                                                <v-subheader class="px-0 primary--text">최종학력</v-subheader>
+                                                  <!-- <v-autocomplete
+                                                    ref="education"
+                                                    :items="educations"
+                                                    v-model="education"
+                                                    label="학력 검색하기"
+                                                  ></v-autocomplete> -->
+                                                  <v-layout wrap>
+                                                    <v-flex xs12 sm4 v-for="(education,index) in educations" :key="index">
+                                                      <v-checkbox :label="education" :value="education" v-model="selectedEducation" hide-details></v-checkbox>
+                                                    </v-flex>
+                                                  </v-layout>
+                                              </v-flex>
+                                              <v-flex xs12>
+                                                <v-divider></v-divider>
+                                              </v-flex>
+                                              <v-flex xs12>
+                                                <v-subheader class="primary--text">통신사</v-subheader>
+                                                <v-layout wrap class="px-3">
+                                                  <v-flex xs12 sm4 v-for="(cellphone,index) in cellphones" :key="index">
+                                                    <v-checkbox :label="cellphone" v-model="selectedCellphone" :value="cellphone" hide-details></v-checkbox>
+                                                  </v-flex>
+                                                </v-layout>
+                                              </v-flex>
+                                              <v-flex class="xs12">
+                                                <v-divider></v-divider>
+                                              </v-flex>
+                                              <v-flex xs12>
+                                                <v-subheader class="primary--text">개인소득수준</v-subheader>
+                                                <v-layout wrap class="px-3">
+                                                  <v-flex xs12 sm4 v-for="(indIncome,index) in indIncomes" :key="index">
+                                                    <v-checkbox :label="indIncome" v-model="selectedIndIncome" :value="indIncome" hide-details></v-checkbox>
+                                                  </v-flex>
+                                                </v-layout>
+                                              </v-flex>
+                                              <v-flex xs12>
+                                                <v-subheader class="primary--text">가구소득수준</v-subheader>
+                                                <v-layout wrap class="px-3">
+                                                  <v-flex xs12 sm4 v-for="(famIncome,index) in famIncomes" :key="index">
+                                                    <v-checkbox :label="famIncome" v-model="selectedFamIncome" :value="famIncome" hide-details></v-checkbox>
+                                                  </v-flex>
+                                                </v-layout>
+                                              </v-flex>
+                                            </v-layout>
+                                          </v-flex>
+                                        </v-layout>
+                                      </v-container>
+                                    </v-card-text>
                                   </v-card>
                                 </v-dialog>
                               </v-flex>
@@ -364,7 +434,65 @@
       menu1: false,
       menu2: false,
       maxParticipate: 1000,
-      newTargetDialog: false
+      newTargetDialog: false,
+      addTargetDialog: false,
+      addedTargetGroup: null,
+      selectedJob: [],
+      jobs: [
+        '전체','경찰/군인/소방관','고등학생','관리직(사장,간부,고위공무원 등)','교직(교사,유치원교사,학원강사 등)','금융업','기능직(자동차정비,운전기사,안경사,택시기사 등)','기타','농업/임업/광업/수산업/축산업','대학생/대학원생','무직','방송인/언론인/기자','사무직(일반사무직,일반 공무원 등)','생산/노무직(생산감독,경비원,공장근로자 등)','서비스직(요식업,숙박업,미용실근로자 등)','자영업 및 개인사업(도소매업,숙박업,미용업,프리랜서 등)','전문직(의사,판검사,예술가,종교인,운동선수 등)','주부','중학생','퇴직/연금생활자','판매직(상점점원,보험설계사,노점상 등','IT/정보통신업'
+      ],
+      selectedEducation: [],
+      educations: [
+        '전체','고등학교 재학','고등학교 졸업','대학교 재학','대학교 졸업','대학원(박사)','대학원(석사)','전문대 재학','전문대 졸업','중학교 재학','중학교 졸업','초등학교 재학','초등학교 졸업'
+      ],
+      selectedCellphone: [],
+      cellphones: ['전체','기타','KT','LG U+','SKT'],
+      selectedIndIncome: [],
+      indIncomes: [
+        '월 200만원 이상 ~ 월 300만원 미만','월 300만원 이상 ~ 월 400만원 미만','월 400만원 이상 ~ 월 500만원 미만','월 500만원 이상 ~ 월 600만원 미만','월 600만원 이상 ~ 월 700만원 미만','월 700만원 이상 ~ 월 800만원 미만','월 800만원 이상 ~ 월 900만원 미만','월 900만원 이상 ~ 월 1000만원 미만'
+      ],
+      selectedFamIncome: [],
+      famIncomes: [
+        '월 200만원 이상 ~ 월 300만원 미만','월 300만원 이상 ~ 월 400만원 미만','월 400만원 이상 ~ 월 500만원 미만','월 500만원 이상 ~ 월 600만원 미만','월 600만원 이상 ~ 월 700만원 미만','월 700만원 이상 ~ 월 800만원 미만','월 800만원 이상 ~ 월 900만원 미만','월 900만원 이상 ~ 월 1000만원 미만'
+      ],
+      newTargetOptions: [
+        { header: '성별' },
+        { 
+          options: [
+            '전체','남자','여자'
+          ]
+        },
+        { divider: true },
+        { header: '연령대' },
+        {
+          options: [
+            '전체','10대','20대','30대','40대','50대','60대 이상'
+          ]
+        },
+        { divider: true },
+        { header: '거주지역'},
+        {
+          options: [
+            '전지역','강원도','경기도','경상남도','경상북도','광주광역시','대구광역시','대전광역시','부산광역시','서울특별시','세종특별자치시','울산광역시','인천광역시','전라남도','전라북도','제주특별자치도','충청남도','충청북도'
+          ]
+        },
+        { divider: true },
+        { header: '결혼여부' },
+        {
+          options: [
+            '전체','기타','기혼','미혼'
+          ]
+        },
+        { divider: true },
+        { header: '가구구성' },
+        {
+          options: [
+            '전체','1인 가구','모','배우자','부','연인','자녀','조부모','친구','형제/자매/남매'
+          ]
+        },
+        { divider: true }
+      ]
+
       }
     },
     computed: {
@@ -429,7 +557,7 @@
 
         const [year, month, day] = date.split('-')
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-      }
+      },
     }
   }
 </script>
@@ -450,6 +578,12 @@
 .v-stepper__wrapper {
   width: 100%;
   height: 100%;
+}
+.v-list-tile {
+  justify-content: flex-start;
+}
+.v-input--checkbox {
+  margin-top: 8px;
 }
 </style>
 
