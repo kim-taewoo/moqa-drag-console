@@ -34,7 +34,7 @@
               <v-container :class="{'pa-0': $vuetify.breakpoint.smAndDown}" grid-list-lg>
                 <v-layout justify-center wrap>
                   <v-flex xs12 sm10 md8 lg6>
-                    <h3><v-icon>create</v-icon> 기본사항</h3>
+                    <h3><v-icon>border_color</v-icon> 기본사항</h3>
                     <v-card ref="form" class="mt-2">
                       <v-card-text>                                                  
                         <form action="">
