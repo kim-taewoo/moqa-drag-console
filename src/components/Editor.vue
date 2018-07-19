@@ -82,13 +82,32 @@
                       </v-card>
                     </transition-group>
                   </draggable>
+                  <v-layout justify-center class="text-xs-center red--text text--lighten-3">
+                    <v-flex xs12 pb-3 >
+                      <div>
+                        카드를 왼쪽에서 끌어오거나 
+                      </div>
+                      <div>아래 버튼을 클릭해서 카드 추가</div>
+                    </v-flex>
+                  </v-layout>
                 </v-flex>
               </v-layout>
-              <v-layout style="position:relative">
-                <v-flex xs12 justify-center>
-                  <v-btn fab absolute outline top dark color="primary">
-                    <v-icon>add</v-icon>
-                  </v-btn>
+              <v-layout justify-center>
+                <v-flex xs12 class="text-xs-center">
+                  <v-menu transition="slide-x-transition" top right>
+                    <v-btn slot="activator" fab bottom dark color="pink">
+                      <v-icon>add</v-icon>
+                    </v-btn>
+                    <v-card width="380px">
+                      <v-layout wrap>
+                        <template v-for="(type, index) in types" >
+                          <v-flex xs6 v-if="type.title" :key="index" >
+                            <v-btn flat v-html="type.title" @click="addCard(type.id)"></v-btn>
+                          </v-flex>
+                        </template>
+                      </v-layout>
+                    </v-card>
+                  </v-menu>
                 </v-flex>                
               </v-layout>
             </v-card>
@@ -120,6 +139,13 @@
         const active = parseInt(this.active)
         this.active = (active < 2 ? active + 1 : 0)
       },
+      addCard (id) {
+        if (id == 0) {
+          this.workplace.push({
+            id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'tabs'
+          })
+        }
+      }
       // onMove ({relatedContext, draggedContext}) {
       //   const relatedElement = relatedContext.element;
       //   const draggedElement = draggedContext.element;
