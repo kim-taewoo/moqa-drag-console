@@ -1,69 +1,75 @@
 <template>
   <v-container fluid class="pa-2" style="height:inherit">
-    <v-layout fill-height>
-      <v-flex class="xs2" style="max-height:100%;over-flow:hidden">
-        <v-layout wrap>
-          <v-flex class="xs12">
-            <v-card id="edit-console" class="ma-2 pa-2" tile>
-              <v-flex xs12>
-                <h2 class="primary--text text--darken-2 mx-1">질문 카드</h2>
-              </v-flex>
-              <v-flex class="xs12">
-                <v-divider></v-divider>
-              </v-flex>
-              <draggable 
-                @start="isDragging=true" 
-                @end="isDragging=false" 
-                xs12 
-                element="v-flex" 
-                v-model="types" 
-                :options="{
-                  draggable: '.drag-item', 
-                  sort: false, 
-                  ghostClass:'ghost', 
-                  group: { name: 'question_cards', pull: 'clone', put: false}}"
-                >
-                  <template v-for="type in types">
-                    <v-subheader v-if="type.header" :key="type.header" class="mt-2 pl-1" style="height:24px">{{ type.header }}</v-subheader>
-                    <v-card 
-                      v-else-if="type.title" 
-                      :key="type.id"
-                      :id="type.id"
-                      class="mx-1 my-2 pa-2 drag-item question-card"
-                      hover>
-                      <v-card-title class="py-0 px-0">
-                        <div class="subheading" v-html="type.title"></div>
-                        <v-spacer></v-spacer>
-                        <v-icon>help_outline</v-icon>
-                      </v-card-title>
-                    </v-card>
-                    <!-- <v-divider v-else-if="type.divider" :key="index"></v-divider> -->
-                  </template>
+    
 
-                <!-- <v-card 
-                  :id="type.id"                   
-                  class="mx-1 my-2 pa-2 drag-item" 
-                  text
-                  hover
-                  v-for="(type, index) in types" :key="index" 
-                  style="cursor:pointer;"
-                >
-                  <v-card-title class="py-0 px-1">
-                    <v-icon>add</v-icon>
-                    <div class="title">{{ type.title }}</div>
-                  </v-card-title>
-                </v-card> -->
-              </draggable>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex class="xs10">
+    <v-layout fill-height>     
+        <v-flex v-if="drawer" class="xs2">
+          <v-layout wrap style="max-height:83vh; overflow-y:auto;">
+            <v-flex class="xs12">
+              <v-card id="edit-console" class="ma-2 pa-2" tile>
+                <v-flex xs12>
+                  <h2 class="primary--text text--darken-2 mx-1">질문 카드</h2>
+                </v-flex>
+                <v-flex class="xs12">
+                  <v-divider></v-divider>
+                </v-flex>
+                <draggable 
+                  @start="isDragging=true" 
+                  @end="isDragging=false" 
+                  xs12 
+                  element="v-flex" 
+                  v-model="types" 
+                  :options="{
+                    draggable: '.drag-item', 
+                    sort: false, 
+                    ghostClass:'ghost', 
+                    group: { name: 'question_cards', pull: 'clone', put: false}}"
+                  >
+                    <template v-for="type in types">
+                      <v-subheader v-if="type.header" :key="type.header" class="mt-2 pl-1" style="height:24px">{{ type.header }}</v-subheader>
+                      <v-card 
+                        v-else-if="type.title" 
+                        :key="type.id"
+                        :id="type.id"
+                        class="mx-1 my-2 pa-2 drag-item question-card"
+                        hover>
+                        <v-card-title class="py-0 px-0">
+                          <div class="subheading" v-html="type.title"></div>
+                          <v-spacer></v-spacer>
+                          <v-icon>help_outline</v-icon>
+                        </v-card-title>
+                      </v-card>
+                      <!-- <v-divider v-else-if="type.divider" :key="index"></v-divider> -->
+                    </template>
+
+                  <!-- <v-card 
+                    :id="type.id"                   
+                    class="mx-1 my-2 pa-2 drag-item" 
+                    text
+                    hover
+                    v-for="(type, index) in types" :key="index" 
+                    style="cursor:pointer;"
+                  >
+                    <v-card-title class="py-0 px-1">
+                      <v-icon>add</v-icon>
+                      <div class="title">{{ type.title }}</div>
+                    </v-card-title>
+                  </v-card> -->
+                </draggable>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+
+      <v-flex class="xs10 main-workplace-layout" :xs12="!drawer">
         <v-layout wrap fill-height>
           <v-flex xs12>
             <v-card id="main-workplace" class="ma-2" height="100%" tile>
+            <v-btn fab dark absolute color="cyan" @click="drawer=!drawer">
+              <v-icon dark :class="{sideToggleActive: drawer}">arrow_forward</v-icon>
+            </v-btn>
               <v-layout justify-center class="grey lighten-5">
-                <v-flex xs12 sm10 md8 lg6 class="text-xs-center">
+                <v-flex xs12 sm7 md7 lg5 class="text-xs-center">
                   <draggable
                     @change="checkAdd" 
                     class="main-workplace"
@@ -156,6 +162,7 @@
     },
     data () {
       return {
+        drawer: true,
         types: [
           { header: '객관식' },
           { id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'tabs' },
@@ -171,6 +178,7 @@
           { id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: null},
           { id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: null},
           { id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: null},
+          { header: '멀티미디어형'},
           { id: 9, title: '멀티미디어형', comp: null}
         ],
         workplace: [
@@ -209,7 +217,15 @@
   .question-card {
     border: 1px solid #b3d4fc
   }
-  .numbering {
-    
+  .sideToggleActive {
+    transform: rotate(-180deg);
+    transition: .3s cubic-bezier(.25,.8,.5,1)
   }
+  .main-workplace-layout {
+    transition: flex-basis 3500ms inline;
+  }
+  /* .workplaceSpan {
+    flex-basis: 100% !important;
+    max-width: 100% !important;
+  } */
 </style>

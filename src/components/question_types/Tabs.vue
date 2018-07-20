@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel v-model="panel">
+  <v-expansion-panel v-model="panel" expand>
     <v-expansion-panel-content>
       <div slot="header">Q{{index+1}}. 객관식<small class="gray--text"> (텍스트)</small></div>
       <div slot="actions"><v-icon class="white--text">keyboard_arrow_down</v-icon> </div>
@@ -10,6 +10,26 @@
         slider-color="yellow"
         fixed-tabs
       >
+        <v-tab ripple>
+          문항
+        </v-tab>
+        <v-tab-item>
+          <v-card>
+            <v-container>
+              <v-layout wrap justify-end>
+                <v-flex xs12>
+                  <v-text-field label="제목"></v-text-field>
+                </v-flex>
+                <v-flex xs9 v-for="(option,index) in options" :key="index">
+                  <v-text-field @click:append="deleteOption(option)" append-icon="delete" :label="(index+1).toString()" v-model="options[index]"></v-text-field>
+                </v-flex>
+                <v-flex xs9>
+                  <v-text-field label="선택지 추가" v-model="anotherOption" @keydown.tab.prevent="addOption"></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
+        </v-tab-item>
         <v-tab
           v-for="tab in tabs"
           :key="tab.order"
@@ -37,15 +57,34 @@
       console.log(this.tabs)
     },
     props: ['index'],
+    methods: {
+      addOption () {
+        if (this.anotherOption) {
+          this.options.push(this.anotherOption)
+          this.anotherOption = null
+          this.feedback = null  
+        } else {
+          this.feedback = "빈칸 선택지는 사용할 수 없습니다."
+        }
+      },
+      deleteOption (option) {
+        this.options = this.options.filter(opt => {
+          return opt != option
+        })
+      }
+    },
     data () {
       return {
-        panel: false,
+        rules: {
+          option: [
+            val => (val || '').length > 0 || this.feedback
+          ]
+        },
+        feedback: null,
+        anotherOption: null,
+        options: [],
+        panel: [true],
         tabs: [
-          {
-            order: 1,
-            title: '문항',
-            content: '내용이 들어갈 자리'
-          },
           {
             order: 2,
             title: '옵션',
