@@ -63,7 +63,7 @@
           <v-flex xs12>
             <v-card id="main-workplace" class="ma-2" height="100%" tile>
               <v-layout justify-center class="grey lighten-5">
-                <v-flex xs12 sm10 md8 lg6>
+                <v-flex xs12 sm10 md8 lg6 class="text-xs-center">
                   <draggable
                     @change="checkAdd" 
                     class="main-workplace"
@@ -77,9 +77,11 @@
                       group: { name: 'question_cards'}}"
                     >
                     <transition-group :name="'list-complete'" tag="div" type="transition" class="trans-group">
+
                       <v-card class="my-3 drag-item workplace-card" v-for="(work,index) in workplace" :key="index">
-                        <component :is="work.comp"></component>
+                        <component :is="work.comp" :index="index"></component>
                       </v-card>
+
                     </transition-group>
                   </draggable>
                   <v-layout justify-center class="text-xs-center red--text text--lighten-3">
@@ -206,5 +208,8 @@
   }
   .question-card {
     border: 1px solid #b3d4fc
+  }
+  .numbering {
+    
   }
 </style>

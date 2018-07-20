@@ -9,7 +9,7 @@
             <div class="stepper-header-header justify-center">
               <v-badge left color="green">
                 <span slot="badge">퀵</span>
-                <h3 class="title">설문 제목</h3>
+                <h3 class="title">{{title}}</h3>
               </v-badge>
             </div>
 
@@ -585,6 +585,12 @@ import Editor from '@/components/Editor'
 }
 .v-input--checkbox {
   margin-top: 8px;
+}
+.title {
+  max-width: 170px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
 
