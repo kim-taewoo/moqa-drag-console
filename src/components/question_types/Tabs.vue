@@ -55,11 +55,11 @@
         </v-tab>
         <v-tab-item>
           <v-card>
-            <v-container>
+            <v-container class="pa-1">
               <v-layout justify-center>
                 <v-flex xs12>
-                  <v-card class="logicCard">
-                    <v-layout wrap align-baseline>
+                  <v-card class="logicCard pa-3 ma-2 elevation-2" style="position:relative">
+                    <v-layout wrap align-baseline >
                       <v-flex xs12>
                         <p class="mb-2">만약 이 문항 {{index + 1}}의 답변이</p> 
                       </v-flex>
@@ -69,31 +69,45 @@
                           label="답변 고르기"
                           outline
                           hide-details
-                          height="30px"
+                          height="24px"
+                          offset-y no-data-text="선택지가 없습니다." browser-autocomplete="off"
                         ></v-select>
                       </v-flex>
                       <v-flex xs3 align-center class="text-xs-left align-end">
                         <div class="ml-3">이라면</div> 
                       </v-flex>
                       <v-flex xs9 class="mt-2">
-                        <v-select height="30px" outline hide-details label="목표 문항 고르기">                          
+                        <v-select offset-y no-data-text="다른 문항이 없습니다." browser-autocomplete="off" height="24px" outline hide-details label="목표 문항 고르기">                          
                         </v-select>
                       </v-flex>
                       <v-flex xs3>
                         <div class="ml-3">으로 간다.</div>
                       </v-flex>
-                      <v-flex class="xs12">
-                        <p class="my-2">그 밖의 모든 경우</p>
-                      </v-flex>
-                      <v-flex class="xs9">
-                        <v-select height="30px" outline hide-details label="다음 문항" :items="logicOption">
-                        </v-select>
-                      </v-flex>
-                      <v-flex class="xs3">
-                        <div class="ml-3">으로 간다.</div>
-                      </v-flex>
                     </v-layout>
+                    <v-btn
+                      absolute
+                      dark
+                      fab
+                      bottom
+                      right
+                      small
+                      color="orange"
+                    >
+                      <v-icon>add</v-icon>
+                    </v-btn>
                   </v-card>
+                  <v-layout wrap class="ma-3" align-baseline>
+                    <v-flex class="xs12">
+                      <p class="my-2">그 밖의 모든 경우</p>
+                    </v-flex>
+                    <v-flex class="xs9">
+                      <v-select offset-y browser-autocomplete="off" height="24px" outline hide-details label="다음 문항" :items="logicOption">
+                      </v-select>
+                    </v-flex>
+                    <v-flex class="xs3">
+                      <div class="ml-3">으로 간다.</div>
+                    </v-flex>
+                  </v-layout>
                 </v-flex>
               </v-layout>
             </v-container>

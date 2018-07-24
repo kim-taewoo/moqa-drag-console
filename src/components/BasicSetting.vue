@@ -28,19 +28,6 @@
               <v-btn v-show="e1 !=3" class="primary" @click="e1++">다음 <v-icon>arrow_forward</v-icon></v-btn>
             </div>
 
-            <v-divider></v-divider>
-
-            <v-stepper-step :complete="e1 > 2" step="2">설문 디자인</v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step step="3">배포하기</v-stepper-step>
-          
-
-            <div class="stepper-header-footer justify-end">
-              <v-btn v-show="e1 !=3" class="primary" @click="e1++">다음 <v-icon>arrow_forward</v-icon></v-btn>
-            </div>
-
           </v-stepper-header>
 
           <v-stepper-items style="height: 100%">
