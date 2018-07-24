@@ -33,8 +33,8 @@
             <v-container style="user-select: none;">
               <v-layout>
                 <v-card-title class="subheading">
-                  <v-icon small>how_to_vote</v-icon>
-                  &nbsp 타입을 선택해 주세요!
+                  <v-icon small class="mr-3">how_to_vote</v-icon>
+                    타입을 선택해 주세요!
                 </v-card-title>
               </v-layout>
               <v-layout>

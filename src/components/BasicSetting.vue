@@ -9,7 +9,7 @@
             <div class="stepper-header-header justify-center">
               <v-badge left color="green">
                 <span slot="badge">퀵</span>
-                <h3 class="title">{{title}}</h3>
+                <h3 class="stepper-header-header-title">{{title}}</h3>
               </v-badge>
             </div>
 
@@ -349,148 +349,47 @@
                                       <v-container class="pa-0">
                                         <v-layout justify-center>
                                           <v-flex xs12 sm10 md8>
+                                        
                                             <v-layout wrap>
-                                              <v-flex xs12 class="px-3">
-                                                <v-subheader class="px-0 primary--text">성별</v-subheader>
-                                                <v-layout wrap>
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" v-model="genderAll" hide-details ></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(gender,index) in genders" :key="index">
-                                                    <v-checkbox :label="gender" :value="gender" v-model="selectedGender" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12 class="px-3">
-                                                <v-subheader class="px-0 primary--text">연령대</v-subheader>
-                                                <v-layout wrap>
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedAge = ages : selectedAge=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(age,index) in ages" :key="index">
-                                                    <v-checkbox :label="age" :value="age" v-model="selectedAge" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12 class="px-3">
-                                                <v-subheader class="px-0 primary--text">거주지역</v-subheader>
-                                                <v-layout wrap>
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedArea = areas : selectedArea=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(area,index) in areas" :key="index">
-                                                    <v-checkbox :label="area" :value="area" v-model="selectedArea" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12 class="px-3">
-                                                <v-subheader class="px-0 primary--text">결혼여부</v-subheader>
-                                                <v-layout wrap>
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedMarry = marries : selectedMarry=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(marry,index) in marries" :key="index">
-                                                    <v-checkbox :label="marry" :value="marry" v-model="selectedMarry" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12 class="px-3">
-                                                <v-subheader class="px-0 primary--text">가구구성</v-subheader>
-                                                <v-layout wrap>
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedFamily = families : selectedFamily=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(family,index) in families" :key="index">
-                                                    <v-checkbox :label="family" :value="family" v-model="selectedFamily" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12 class="px-3">
-                                                <v-subheader class="px-0 primary--text">직업</v-subheader>
-                                                <v-layout wrap>
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedJob = jobs : selectedJob=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(job,index) in jobs" :key="index">
-                                                    <v-checkbox :label="job" :value="job" v-model="selectedJob" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12 class="px-3">
-                                                <v-subheader class="px-0 primary--text">최종학력</v-subheader>
-                                                  <!-- <v-autocomplete
-                                                    ref="education"
-                                                    :items="educations"
-                                                    v-model="education"
-                                                    label="학력 검색하기"
-                                                  ></v-autocomplete> -->
-                                                  <v-layout wrap>
-                                                    <v-flex class="xs12 sm4">
-                                                      <v-checkbox label="전체" hide-details @change="$event ? selectedEducation = educations : selectedEducation=[]"></v-checkbox>
-                                                    </v-flex>
-                                                    <v-flex xs12 sm4 v-for="(education,index) in educations" :key="index">
-                                                      <v-checkbox :label="education" :value="education" v-model="selectedEducation" hide-details></v-checkbox>
-                                                    </v-flex>
-                                                  </v-layout>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-subheader class="primary--text">통신사</v-subheader>
-                                                <v-layout wrap class="px-3">
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedCellphone = cellphones : selectedCellphone=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(cellphone,index) in cellphones" :key="index">
-                                                    <v-checkbox :label="cellphone" v-model="selectedCellphone" :value="cellphone" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
-                                              <v-flex class="xs12">
-                                                <v-divider></v-divider>
-                                              </v-flex>
-                                              <v-flex xs12>
-                                                <v-subheader class="primary--text">개인소득수준</v-subheader>
-                                                <v-layout wrap class="px-3">
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedIndIncome = indIncomes : selectedIndIncome=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(indIncome,index) in indIncomes" :key="index">
-                                                    <v-checkbox :label="indIncome" v-model="selectedIndIncome" :value="indIncome" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
+
+                                              <CheckBox :options="genders" :label="'성별'" @checkChanged="selectedGender = $event"></CheckBox>
+
                                               <v-flex xs12><v-divider></v-divider></v-flex>
-                                              <v-flex xs12>
-                                                <v-subheader class="primary--text">가구소득수준</v-subheader>
-                                                <v-layout wrap class="px-3">
-                                                  <v-flex class="xs12 sm4">
-                                                    <v-checkbox label="전체" hide-details @change="$event ? selectedFamIncome = famIncomes : selectedFamIncome=[]"></v-checkbox>
-                                                  </v-flex>
-                                                  <v-flex xs12 sm4 v-for="(famIncome,index) in famIncomes" :key="index">
-                                                    <v-checkbox :label="famIncome" v-model="selectedFamIncome" :value="famIncome" hide-details></v-checkbox>
-                                                  </v-flex>
-                                                </v-layout>
-                                              </v-flex>
+
+                                              <CheckBox :options="ages" :label="'연령대'" @checkChanged="selectedAge = $event"></CheckBox>
+
+                                              <v-flex xs12><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="areas" :label="'거주지역'" @checkChanged="selectedArea = $event"></CheckBox>
+                                              
+                                              <v-flex xs12><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="marries" :label="'결혼여부'" @checkChanged="selectedMarry = $event"></CheckBox>
+                                              
+                                              <v-flex xs12><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="families" :label="'가구구성'" @checkChanged="selectedFamily = $event"></CheckBox>
+                                              
+                                              <v-flex xs12><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="jobs" :label="'직업'" @checkChanged="selectedJob = $event"></CheckBox>
+                                              
+                                              <v-flex xs12><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="educations" :label="'최종학력'" @checkChanged="selectedEducation = $event"></CheckBox>
+                                              
+                                              <v-flex xs12><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="cellphones" :label="'통신사'" @checkChanged="selectedCellphone = $event"></CheckBox>
+                                              
+                                              <v-flex class="xs12"><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="indIncomes" :label="'개인소득수준'" @checkChanged="selectedIndIncome = $event"></CheckBox>
+                                              
+                                              <v-flex xs12><v-divider></v-divider></v-flex>
+
+                                              <CheckBox :options="famIncomes" :label="'가구소득수준'" @checkChanged="selectedFamIncome = $event"></CheckBox>
+                                              
                                             </v-layout>
                                           </v-flex>
                                         </v-layout>
@@ -530,11 +429,13 @@
 
 <script>
 import Editor from '@/components/Editor'
+import CheckBox from '@/components/basic_setting_target/CheckBox'
 
   export default {
     name: 'BasicSetting',
     components: {
-      Editor
+      Editor,
+      CheckBox
     },
     data () {
       return {
@@ -582,32 +483,41 @@ import Editor from '@/components/Editor'
       newTargetDialog: false,
       addTargetDialog: false,
       addedTargetGroup: null,
-      selectedGender: ['남자','여자'],
+
       genders: ['남자','여자'],
-      selectedAge: [],
+      selectedGender: ['남자','여자'],
       ages: ['10대','20대','30대','40대','50대','60대 이상'],
-      selectedArea: [],
+      selectedAge: ['10대','20대','30대','40대','50대','60대 이상'],
       areas: ['강원도','경기도','경상남도','경상북도','광주광역시','대구광역시','대전광역시','부산광역시','서울특별시','세종특별자치시','울산광역시','인천광역시','전라남도','전라북도','제주특별자치도','충청남도','충청북도'],
-      selectedMarry: [],
+      selectedArea: ['강원도','경기도','경상남도','경상북도','광주광역시','대구광역시','대전광역시','부산광역시','서울특별시','세종특별자치시','울산광역시','인천광역시','전라남도','전라북도','제주특별자치도','충청남도','충청북도'],
       marries: ['기타','기혼','미혼'],
-      selectedFamily: [],
+      selectedMarry: ['기타','기혼','미혼'],
       families: ['1인 가구','모','배우자','부','연인','자녀','조부모','친구','형제/자매/남매'],
-      selectedJob: [],
+      selectedFamily: ['1인 가구','모','배우자','부','연인','자녀','조부모','친구','형제/자매/남매'],
       jobs: [
         '경찰/군인/소방관','고등학생','관리직(사장,간부,고위공무원 등)','교직(교사,유치원교사,학원강사 등)','금융업','기능직(자동차정비,운전기사,안경사,택시기사 등)','기타','농업/임업/광업/수산업/축산업','대학생/대학원생','무직','방송인/언론인/기자','사무직(일반사무직,일반 공무원 등)','생산/노무직(생산감독,경비원,공장근로자 등)','서비스직(요식업,숙박업,미용실근로자 등)','자영업 및 개인사업(도소매업,숙박업,미용업,프리랜서 등)','전문직(의사,판검사,예술가,종교인,운동선수 등)','주부','중학생','퇴직/연금생활자','판매직(상점점원,보험설계사,노점상 등','IT/정보통신업'
       ],
-      selectedEducation: [],
+      selectedJob: [
+        '경찰/군인/소방관','고등학생','관리직(사장,간부,고위공무원 등)','교직(교사,유치원교사,학원강사 등)','금융업','기능직(자동차정비,운전기사,안경사,택시기사 등)','기타','농업/임업/광업/수산업/축산업','대학생/대학원생','무직','방송인/언론인/기자','사무직(일반사무직,일반 공무원 등)','생산/노무직(생산감독,경비원,공장근로자 등)','서비스직(요식업,숙박업,미용실근로자 등)','자영업 및 개인사업(도소매업,숙박업,미용업,프리랜서 등)','전문직(의사,판검사,예술가,종교인,운동선수 등)','주부','중학생','퇴직/연금생활자','판매직(상점점원,보험설계사,노점상 등','IT/정보통신업'
+      ],
       educations: [
         '고등학교 재학','고등학교 졸업','대학교 재학','대학교 졸업','대학원(박사)','대학원(석사)','전문대 재학','전문대 졸업','중학교 재학','중학교 졸업','초등학교 재학','초등학교 졸업'
       ],
-      selectedCellphone: [],
+      selectedEducation: [
+        '고등학교 재학','고등학교 졸업','대학교 재학','대학교 졸업','대학원(박사)','대학원(석사)','전문대 재학','전문대 졸업','중학교 재학','중학교 졸업','초등학교 재학','초등학교 졸업'
+      ],
       cellphones: ['기타','KT','LG U+','SKT'],
-      selectedIndIncome: [],
+      selectedCellphone: ['기타','KT','LG U+','SKT'],
       indIncomes: [
         '월 200만원 이상 ~ 월 300만원 미만','월 300만원 이상 ~ 월 400만원 미만','월 400만원 이상 ~ 월 500만원 미만','월 500만원 이상 ~ 월 600만원 미만','월 600만원 이상 ~ 월 700만원 미만','월 700만원 이상 ~ 월 800만원 미만','월 800만원 이상 ~ 월 900만원 미만','월 900만원 이상 ~ 월 1000만원 미만'
       ],
-      selectedFamIncome: [],
+      selectedIndIncome: [
+        '월 200만원 이상 ~ 월 300만원 미만','월 300만원 이상 ~ 월 400만원 미만','월 400만원 이상 ~ 월 500만원 미만','월 500만원 이상 ~ 월 600만원 미만','월 600만원 이상 ~ 월 700만원 미만','월 700만원 이상 ~ 월 800만원 미만','월 800만원 이상 ~ 월 900만원 미만','월 900만원 이상 ~ 월 1000만원 미만'
+      ],
       famIncomes: [
+        '월 200만원 이상 ~ 월 300만원 미만','월 300만원 이상 ~ 월 400만원 미만','월 400만원 이상 ~ 월 500만원 미만','월 500만원 이상 ~ 월 600만원 미만','월 600만원 이상 ~ 월 700만원 미만','월 700만원 이상 ~ 월 800만원 미만','월 800만원 이상 ~ 월 900만원 미만','월 900만원 이상 ~ 월 1000만원 미만'
+      ],
+      selectedFamIncome: [
         '월 200만원 이상 ~ 월 300만원 미만','월 300만원 이상 ~ 월 400만원 미만','월 400만원 이상 ~ 월 500만원 미만','월 500만원 이상 ~ 월 600만원 미만','월 600만원 이상 ~ 월 700만원 미만','월 700만원 이상 ~ 월 800만원 미만','월 800만원 이상 ~ 월 900만원 미만','월 900만원 이상 ~ 월 1000만원 미만'
       ],
       }
@@ -616,22 +526,22 @@ import Editor from '@/components/Editor'
       computedDateFormatted () {
         return this.formatDate(this.date)
       },
-      genderAll: {
-        get () {
-          if (this.genders.length == this.selectedGender.length) {
-            return true
-          } else {
-            return false
-          }
-        },
-        set (event) {
-          if (event) {
-            this.selectedGender = this.genders
-          } else {
-            this.selectedGender = []
-          }
-        }
-      }
+      // genderAll: {
+      //   get () {
+      //     if (this.genders.length == this.selectedGender.length) {
+      //       return true
+      //     } else {
+      //       return false
+      //     }
+      //   },
+      //   set (event) {
+      //     if (event) {
+      //       this.selectedGender = this.genders
+      //     } else {
+      //       this.selectedGender = []
+      //     }
+      //   }
+      // }
     },
     watch: {
       name () {
@@ -685,7 +595,7 @@ import Editor from '@/components/Editor'
   }
 </script>
 
-<style>
+<style scoped>
 .stepper-header-header {
   display: inline-flex;
   align-items: center;
@@ -709,7 +619,7 @@ import Editor from '@/components/Editor'
 .v-input--checkbox {
   margin-top: 8px;
 }
-.title {
+.stepper-header-header-title {
   max-width: 170px;
   white-space: nowrap;
   overflow: hidden;
