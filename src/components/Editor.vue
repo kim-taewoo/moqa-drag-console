@@ -4,7 +4,7 @@
 
     <v-layout fill-height>     
         <v-flex v-if="drawer" class="xs2">
-          <v-layout wrap style="max-height:83vh; overflow-y:auto;">
+          <v-layout wrap style="max-height:84vh; overflow-y:auto;">
             <v-flex class="xs12">
               <v-card id="edit-console" class="ma-2 pa-2" tile>
                 <v-flex xs12>
