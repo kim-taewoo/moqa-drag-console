@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel v-model="panel" expand>
     <v-expansion-panel-content>
-      <div slot="header">Q{{index+1}}. 객관식<small class="gray--text"> (텍스트)</small> <span class="q-title">: {{qTitle}}</span> </div>
+      <div slot="header">Q{{questionIndex+1}}. 객관식<small class="gray--text"> (텍스트)</small> <span class="q-title">: {{qTitle}}</span> </div>
       <div slot="actions"><v-icon class="white--text">keyboard_arrow_down</v-icon> </div>
       <v-tabs
         v-model="active"
@@ -58,32 +58,36 @@
             <v-container class="pa-1">
               <v-layout justify-center>
                 <v-flex xs12>
-                  <v-card class="logicCard pa-3 ma-2 elevation-2" style="position:relative">
-                    <v-layout wrap align-baseline >
-                      <v-flex xs12>
-                        <p class="mb-2">만약 이 문항 {{index + 1}}의 답변이</p> 
-                      </v-flex>
-                      <v-flex xs9 align-center>
-                        <v-select
-                          :items="options"
-                          label="답변 고르기"
-                          outline
-                          hide-details
-                          height="24px"
-                          offset-y no-data-text="선택지가 없습니다." browser-autocomplete="off"
-                        ></v-select>
-                      </v-flex>
-                      <v-flex xs3 align-center class="text-xs-left align-end">
-                        <div class="ml-3">이라면</div> 
-                      </v-flex>
-                      <v-flex xs9 class="mt-2">
-                        <v-select offset-y no-data-text="다른 문항이 없습니다." browser-autocomplete="off" height="24px" outline hide-details label="목표 문항 고르기">                          
-                        </v-select>
-                      </v-flex>
-                      <v-flex xs3>
-                        <div class="ml-3">으로 간다.</div>
-                      </v-flex>
+                  <LogicCard @deletelogic="deleteLogic(logicCard)" v-for="(logicCard, index) in logicCards" :key="index" :questionIndex="questionIndex" :options="options" />
+                  <v-card class="logicCard pa-3 ma-2 elevation-2">
+                    <v-layout wrap align-baseline style="position:relative">
+                        <v-flex xs12>
+                            <p class="mb-2">만약 이 문항 {{questionIndex + 1}}의 답변이</p> 
+                        </v-flex>
+                        <v-flex xs9 align-center>
+                            <v-select
+                                :items="options"
+                                label="답변 고르기"
+                                outline
+                                hide-details
+                                height="24px"
+                                offset-y no-data-text="선택지가 없습니다." browser-autocomplete="off"
+                            ></v-select>
+                        </v-flex>
+                        <v-flex xs3 align-center class="text-xs-left align-end">
+                            <div class="ml-3">이라면</div> 
+                        </v-flex>
+                        <v-flex xs9 class="mt-2">
+                            <v-select offset-y no-data-text="다른 문항이 없습니다." browser-autocomplete="off" height="24px" outline hide-details label="목표 문항 고르기">                          
+                            </v-select>
+                        </v-flex>
+                        <v-flex xs3>
+                            <div class="ml-3">으로 간다.</div>
+                        </v-flex>
                     </v-layout>
+                  </v-card>
+
+                  <v-layout style="position: relative">
                     <v-btn
                       absolute
                       dark
@@ -92,10 +96,12 @@
                       right
                       small
                       color="orange"
+                      style="top:-28px"
+                      @click="addLogicCard"
                     >
                       <v-icon>add</v-icon>
                     </v-btn>
-                  </v-card>
+                  </v-layout>
                   <v-layout wrap class="ma-3" align-baseline>
                     <v-flex class="xs12">
                       <p class="my-2">그 밖의 모든 경우</p>
@@ -120,11 +126,16 @@
 </template>
 
 <script>
+  import LogicCard from '@/components/question_types/LogicCard'
+
   export default {
     created () {
       console.log(this.tabs)
     },
-    props: ['index'],
+    props: ['questionIndex'],
+    components: {
+      LogicCard
+    },
     methods: {
       addOption () {
         if (this.anotherOption) {
@@ -139,6 +150,13 @@
         this.options = this.options.filter(opt => {
           return opt != option
         })
+      },
+      addLogicCard () {
+        this.logicCardOrder++
+        this.logicCards.push(this.logicCardOrder)
+      },
+      deleteLogic (logic) {
+        this.logicCards.splice(this.logicCards.indexOf(logic),1)
       }
     },
     data () {
@@ -150,24 +168,14 @@
         },
         feedback: null,
         anotherOption: null,
+        logicCardOrder: 0,
+        logicCards: [],
         options: [],
         logicOption: ['다음문항','자격박탈','설문 종료','3.lorem...'],
         multiselectSwitch: false,
         multiselectMax: 0,
         qTitle: null,
         panel: [true],
-        tabs: [
-          {
-            order: 2,
-            title: '옵션',
-            content: '내용이 들어갈 자리2'
-          },
-          {
-            order: 3,
-            title: '로직',
-            content: '내용이 들어갈 자리3'
-          },
-        ],
         active: null,
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
       }

@@ -75,17 +75,16 @@
                     class="main-workplace"
                     v-model="workplace" 
                     :options="{
-                      draggable: '.drag-item', 
                       ghostClass:'ghost', 
                       scrollSensitivity: 80, 
                       scrollSpeed: 30, 
                       animation: 150,
                       group: { name: 'question_cards'}}"
                     >
-                    <transition-group :name="'list-complete'" tag="div" type="transition" class="trans-group">
+                    <transition-group name="'list-complete'" tag="div" type="transition" class="trans-group">
 
                       <v-card class="my-3 drag-item workplace-card" v-for="(work,index) in workplace" :key="index">
-                        <component :is="work.comp" :index="index"></component>
+                        <component :is="work.comp" :questionIndex="index"></component>
                       </v-card>
 
                     </transition-group>
@@ -129,14 +128,16 @@
 
 <script>
   import draggable from 'vuedraggable'
-  import tabs from '@/components/question_types/Tabs'
-  import simpleCard from '@/components/question_types/SimpleCard'
+  import MultipleText from '@/components/question_types/MultipleText'
+  import StarRating from '@/components/question_types/StarRating'
+  import Subjective from '@/components/question_types/Subjective'
 
   export default {
     components: {
       draggable,
-      tabs,
-      'simple-card': simpleCard
+      MultipleText,
+      StarRating,
+      Subjective
     },
     methods: {
       checkAdd (e) {
@@ -150,7 +151,15 @@
       addCard (id) {
         if (id == 0) {
           this.workplace.push({
-            id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'tabs'
+            id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'MultipleText'
+          })
+        } else if (id==4) {
+          this.workplace.push({
+            id: 4, title: '별점형', comp: 'StarRating'
+          })
+        } else if (id==5) {
+          this.workplace.push({
+            id: 5, title: '주관식형', comp: 'Subjective'
           })
         }
       }
@@ -165,15 +174,15 @@
         drawer: true,
         types: [
           { header: '객관식' },
-          { id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'tabs' },
+          { id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'MultipleText' },
           { id: 1, title: '객관식 <span class="subText">(이미지)</span>', comp: null},
           { header: '순위 선택형'},
           { id: 2, title: '순위 선택형 <span class="subText">(텍스트)</span>', comp: null},
           { id: 3, title: '순위 선택형 <span class="subText">(이미지)</span>', comp: null},
           { header: '별점형'},
-          { id: 4, title: '별점형', comp: 'simple-card' },
+          { id: 4, title: '별점형', comp: 'StarRating' },
           { header: '주관식형'},
-          { id: 5, title: '주관식형', comp: null },
+          { id: 5, title: '주관식형', comp: 'Subjective' },
           { header: '척도형'},
           { id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: null},
           { id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: null},
