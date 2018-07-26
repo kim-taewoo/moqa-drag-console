@@ -113,6 +113,7 @@
 <script>
 
   export default {
+    name: 'Subjective',
     props: ['questionIndex'],
     data () {
       return {

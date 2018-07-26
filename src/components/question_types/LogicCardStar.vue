@@ -43,6 +43,7 @@
 
 <script>
 export default {
+    name: 'LogicCardStar',
     props: ['questionIndex', 'options','options2'],
     methods: {
         deleteLogic (e) {

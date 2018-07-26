@@ -134,6 +134,7 @@
   import RankingText from '@/components/question_types/RankingText'
   import TickHorizontal from '@/components/question_types/TickHorizontal'
   import TickVertical from '@/components/question_types/TickVertical'
+  import TickCircle from '@/components/question_types/TickCircle'
 
   export default {
     components: {
@@ -143,7 +144,8 @@
       Subjective,
       RankingText,
       TickHorizontal,
-      TickVertical
+      TickVertical,
+      TickCircle
     },
     methods: {
       checkAdd (e) {
@@ -179,6 +181,10 @@
           this.workplace.push({
             id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: 'TickVertical'
           })
+        } else if (id==8) {
+          this.workplace.push({
+            id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: 'TickCircle'
+          })
         }
       }
       // onMove ({relatedContext, draggedContext}) {
@@ -204,7 +210,7 @@
           { header: '척도형'},
           { id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'},
           { id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: 'TickVertical'},
-          { id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: null}
+          { id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: 'TickCircle'}
         ],
         workplace: [
         ],

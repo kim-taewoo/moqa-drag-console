@@ -149,6 +149,7 @@
   import LogicCard from '@/components/question_types/LogicCard'
 
   export default {
+    name: 'MultipleText',
     props: ['questionIndex'],
     components: {
       LogicCard

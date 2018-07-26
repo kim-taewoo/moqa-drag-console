@@ -39,6 +39,7 @@
 <script>
 
   export default {
+    name: 'RankingText',
     props: ['questionIndex'],
     methods: {
       addOption () {

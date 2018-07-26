@@ -149,6 +149,7 @@ import StarRating from 'vue-star-rating'
 import LogicCardStar from '@/components/question_types/LogicCardStar'
 
   export default {
+    name: 'StarRating',
     components: {
       StarRating,
       LogicCardStar

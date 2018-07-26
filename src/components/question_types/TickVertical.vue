@@ -162,6 +162,7 @@
 import LogicCardStar from "@/components/question_types/LogicCardStar";
 
 export default {
+  name: 'TickVertical',
   props: ["questionIndex"],
   components: {
     LogicCardStar

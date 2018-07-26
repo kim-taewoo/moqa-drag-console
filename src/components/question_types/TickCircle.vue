@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel v-model="panel" expand>
     <v-expansion-panel-content>
-      <div slot="header">Q{{questionIndex+1}}. 척도형<small class="gray--text"> (가로)</small> <span class="q-title">: {{qTitle}}</span> </div>
+      <div slot="header">Q{{questionIndex+1}}. 척도형<small class="gray--text"> (원형)</small> <span class="q-title">: {{qTitle}}</span> </div>
       <div slot="actions"><v-icon class="white--text">keyboard_arrow_down</v-icon> </div>
       <v-tabs
         v-model="active"
@@ -20,26 +20,18 @@
                 <v-flex xs10>
                   <v-text-field label="제목" v-model="qTitle"></v-text-field>
                 </v-flex>
-                <v-flex xs9 offset-xs1 v-for="(option,index) in options" :key="index">
-                  <v-text-field @click:append="deleteOption(option)" append-icon="delete" :label="(index+1).toString()" v-model="options[index]"></v-text-field>
+                <v-flex xs9 offset-xs1>
+                  <v-text-field type="number" label="최소값을 입력해주세요" v-model="circleMin"></v-text-field>
                 </v-flex>
-                <v-flex v-if="options.length<3" xs9 offset-xs1>
-                  <v-text-field label="선택지 (Tab 키로 추가)" v-model="anotherOption" @keydown.tab.prevent="addOption"></v-text-field>
+                <v-flex xs9 offset-xs1>
+                  <v-text-field type="number" label="최대값을 입력해주세요" v-model="circleMax"></v-text-field>
                 </v-flex>
-                <v-flex xs11 class="mt-3">
-                    <v-radio-group hide-details row style="margin:0">
-                        <v-radio style="margin-right:0;" value="radio-1"></v-radio>
-                        <v-divider style="margin-top:12px;margin-left:-8px"></v-divider>
-                        <v-radio style="margin-right:0;" value="radio-2"></v-radio>
-                        <v-divider style="margin-top:12px;margin-left:-8px"></v-divider>
-                        <v-radio style="margin-right:0;" value="radio-3"></v-radio>
-                    </v-radio-group>
+                <v-flex xs9 offset-xs1>
+                  <v-text-field type="number" label="단위를 입력해주세요" v-model="circleUnit"></v-text-field>
                 </v-flex>
-                <v-flex xs11>
-                    <v-layout wrap>
-                        <v-flex class="xs4 tick-option">{{options[0]}}</v-flex>
-                        <v-flex class="xs4 text-xs-center tick-option">{{options[1]}}</v-flex>
-                        <v-flex class="xs4 text-xs-right tick-option">{{options[2]}}</v-flex>
+                <v-flex xs12 md8 class="mt-3">
+                    <v-layout justify-center>
+                        <circle-slider v-model="sliderValue"></circle-slider>
                     </v-layout>
                 </v-flex>
               </v-layout>
@@ -166,8 +158,9 @@
 <script>
 import LogicCardStar from "@/components/question_types/LogicCardStar";
 
+
 export default {
-  name: 'TickHorizontal',
+  name: 'TickCircle',
   props: ["questionIndex"],
   components: {
     LogicCardStar
@@ -226,6 +219,10 @@ export default {
       options2: ["이상", "이하"],
       logicOption: ["다음문항", "자격박탈", "설문 종료", "3.lorem..."],
       radioOptions: ["0", "1", "2"],
+      sliderValue: null,
+      circleMin: null,
+      circleMax: null,
+      circleUnit: null,
       multimediaSwitch: false,
       qTitle: null,
       panel: [true],
