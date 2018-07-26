@@ -131,13 +131,17 @@
   import MultipleText from '@/components/question_types/MultipleText'
   import StarRating from '@/components/question_types/StarRating'
   import Subjective from '@/components/question_types/Subjective'
+  import RankingText from '@/components/question_types/RankingText'
+  import TickHorizontal from '@/components/question_types/TickHorizontal'
 
   export default {
     components: {
       draggable,
       MultipleText,
       StarRating,
-      Subjective
+      Subjective,
+      RankingText,
+      TickHorizontal
     },
     methods: {
       checkAdd (e) {
@@ -161,6 +165,14 @@
           this.workplace.push({
             id: 5, title: '주관식형', comp: 'Subjective'
           })
+        } else if (id==2) {
+          this.workplace.push({
+            id: 2, title: '순위 선택형 <span class="subText">(텍스트)</span>', comp: 'RankingText'
+          })
+        } else if (id==6) {
+          this.workplace.push({
+            id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'
+          })
         }
       }
       // onMove ({relatedContext, draggedContext}) {
@@ -177,18 +189,16 @@
           { id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'MultipleText' },
           { id: 1, title: '객관식 <span class="subText">(이미지)</span>', comp: null},
           { header: '순위 선택형'},
-          { id: 2, title: '순위 선택형 <span class="subText">(텍스트)</span>', comp: null},
+          { id: 2, title: '순위 선택형 <span class="subText">(텍스트)</span>', comp: 'RankingText'},
           { id: 3, title: '순위 선택형 <span class="subText">(이미지)</span>', comp: null},
           { header: '별점형'},
           { id: 4, title: '별점형', comp: 'StarRating' },
           { header: '주관식형'},
           { id: 5, title: '주관식형', comp: 'Subjective' },
           { header: '척도형'},
-          { id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: null},
+          { id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'},
           { id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: null},
-          { id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: null},
-          { header: '멀티미디어형'},
-          { id: 9, title: '멀티미디어형', comp: null}
+          { id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: null}
         ],
         workplace: [
         ],

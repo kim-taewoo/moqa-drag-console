@@ -14,39 +14,39 @@
 
 <script>
 export default {
-    name: 'CheckBox',
-    props: ['options', 'label'],
-    data () {
-        return {
-            selectedOption: [] 
-        }
-    },
-    created () {
-        this.selectedOption = this.options.slice()
-    },
-    methods: {
-        changedCheck () {
-            this.$emit('checkChanged', this.selectedOption)
-        }
-    },
-    computed: {
-        optionAll: {
-            get () {
-                if (this.selectedOption.length == this.options.length) {
-                    return true
-                } else {
-                    return false
-                }
-            },
-            set (event) {
-                if (event) {
-                    this.selectedOption = this.options
-                } else {
-                    this.selectedOption = []
-                }
-            }
-        }
+  name: "CheckBox",
+  props: ["options", "label"],
+  data() {
+    return {
+      selectedOption: []
+    };
+  },
+  created() {
+    this.selectedOption = this.options.slice();
+  },
+  methods: {
+    changedCheck() {
+      this.$emit("checkChanged", this.selectedOption);
     }
-}
+  },
+  computed: {
+    optionAll: {
+      get() {
+        if (this.selectedOption.length == this.options.length) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      set(event) {
+        if (event) {
+          this.selectedOption = this.options.slice();
+        } else {
+          this.selectedOption = [];
+        }
+      }
+    }
+  }
+};
 </script>
 
