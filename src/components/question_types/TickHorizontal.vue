@@ -69,9 +69,18 @@
                   ></v-switch>
                 </v-flex>
                 <v-flex xs4>
-                    <v-btn :disabled="!multimediaSwitch" class="primary">
+                    <v-btn @click="onPickFile" :disabled="!multimediaSwitch" class="primary">
                         Upload <v-icon right dark>cloud_upload</v-icon>
                     </v-btn>
+                    <input type="file" style="display:none;" ref="fileInput" accept="image/*" @change="onFilePicked">
+                </v-flex>
+                <v-flex class="xs12">
+                    <img
+                    v-for="(img,index) in imageUrl"
+                    :key="index"
+                    :src="img"
+                    width="100%"
+                    alt="">
                 </v-flex>
               </v-layout>
             </v-container>
@@ -192,6 +201,24 @@ export default {
     },
     deleteLogic(logic) {
       this.logicCards.splice(this.logicCards.indexOf(logic), 1);
+    },
+    onPickFile () {
+        this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+        this.imageUrl = []
+        const files = event.target.files
+        console.log('1:', files)
+        const file = files[0]
+        let filename = file.name
+        if (filename.lastIndexOf('.') <= 0) {
+            return alert('유효한 이미지 파일을 업로드 해주세요!')
+        }
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+            this.imageUrl.push(fileReader.result)
+        })
+        fileReader.readAsDataURL(file)
     }
   },
   data() {
@@ -212,7 +239,8 @@ export default {
       multiselectMax: 0,
       qTitle: null,
       panel: [true],
-      active: null
+      active: null,
+      imageUrl: []
     };
   }
 };

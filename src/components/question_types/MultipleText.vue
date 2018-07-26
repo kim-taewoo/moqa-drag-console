@@ -43,8 +43,28 @@
                     v-model="multiselectSwitch"
                   ></v-switch>
                 </v-flex>
-                <v-flex xs3>
+                <v-flex xs4>
                   <v-text-field :disabled="!multiselectSwitch" v-model="multiselectMax" type="number"></v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                  <v-switch
+                    label="멀티미디어형"
+                    v-model="multimediaSwitch"
+                  ></v-switch>
+                </v-flex>
+                <v-flex xs4>
+                    <v-btn @click="onPickFile" :disabled="!multimediaSwitch" class="primary">
+                        Upload <v-icon right dark>cloud_upload</v-icon>
+                    </v-btn>
+                    <input type="file" style="display:none;" ref="fileInput" accept="image/*" @change="onFilePicked">
+                </v-flex>
+                <v-flex class="xs12">
+                    <img
+                    v-for="(img,index) in imageUrl"
+                    :key="index"
+                    :src="img"
+                    width="100%"
+                    alt="">
                 </v-flex>
               </v-layout>
             </v-container>
@@ -129,9 +149,6 @@
   import LogicCard from '@/components/question_types/LogicCard'
 
   export default {
-    created () {
-      console.log(this.tabs)
-    },
     props: ['questionIndex'],
     components: {
       LogicCard
@@ -157,6 +174,24 @@
       },
       deleteLogic (logic) {
         this.logicCards.splice(this.logicCards.indexOf(logic),1)
+      },
+      onPickFile () {
+        this.$refs.fileInput.click()
+      },
+      onFilePicked (event) {
+          this.imageUrl = []
+          const files = event.target.files
+          console.log('1:', files)
+          const file = files[0]
+          let filename = file.name
+          if (filename.lastIndexOf('.') <= 0) {
+              return alert('유효한 이미지 파일을 업로드 해주세요!')
+          }
+          const fileReader = new FileReader()
+          fileReader.addEventListener('load', () => {
+              this.imageUrl.push(fileReader.result)
+          })
+          fileReader.readAsDataURL(file)
       }
     },
     data () {
@@ -177,6 +212,8 @@
         qTitle: null,
         panel: [true],
         active: null,
+        imageUrl: [],
+        multimediaSwitch: false,
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
       }
     }

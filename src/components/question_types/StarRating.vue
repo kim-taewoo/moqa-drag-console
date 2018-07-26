@@ -27,26 +27,37 @@
             </v-container>
           </v-card>
         </v-tab-item>
-        <!-- <v-tab>
+        <v-tab>
           옵션
         </v-tab>
         <v-tab-item>
           <v-card>
             <v-container>
-              <v-layout wrap justify-center>
+              <v-layout wrap justify-center>                
                 <v-flex xs6>
                   <v-switch
-                    label="중복 선택 가능"
-                    v-model="multiselectSwitch"
+                    label="멀티미디어형"
+                    v-model="multimediaSwitch"
                   ></v-switch>
                 </v-flex>
-                <v-flex xs3>
-                  <v-text-field :disabled="!multiselectSwitch" v-model="multiselectMax" type="number"></v-text-field>
+                <v-flex xs4>
+                    <v-btn @click="onPickFile" :disabled="!multimediaSwitch" class="primary">
+                        Upload <v-icon right dark>cloud_upload</v-icon>
+                    </v-btn>
+                    <input type="file" style="display:none;" ref="fileInput" accept="image/*" @change="onFilePicked">
+                </v-flex>
+                <v-flex class="xs12">
+                    <img
+                    v-for="(img,index) in imageUrl"
+                    :key="index"
+                    :src="img"
+                    width="100%"
+                    alt="">
                 </v-flex>
               </v-layout>
             </v-container>
           </v-card>
-        </v-tab-item> -->
+        </v-tab-item>
         <v-tab>
           로직
         </v-tab>
@@ -151,7 +162,9 @@ import LogicCardStar from '@/components/question_types/LogicCardStar'
         options: [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5],
         options2: ['이상','이하'],
         logicOption: ['다음문항','자격박탈','설문 종료','3.lorem...'],
-        logicCards: []
+        logicCards: [],
+        multimediaSwitch: false,
+        imageUrl: []
       }
     },
     methods: {
@@ -161,6 +174,24 @@ import LogicCardStar from '@/components/question_types/LogicCardStar'
       },
       deleteLogic (logic) {
         this.logicCards.splice(this.logicCards.indexOf(logic),1)
+      },
+      onPickFile () {
+        this.$refs.fileInput.click()
+      },
+      onFilePicked (event) {
+          this.imageUrl = []
+          const files = event.target.files
+          console.log('1:', files)
+          const file = files[0]
+          let filename = file.name
+          if (filename.lastIndexOf('.') <= 0) {
+              return alert('유효한 이미지 파일을 업로드 해주세요!')
+          }
+          const fileReader = new FileReader()
+          fileReader.addEventListener('load', () => {
+              this.imageUrl.push(fileReader.result)
+          })
+          fileReader.readAsDataURL(file)
       }
     }
   }
