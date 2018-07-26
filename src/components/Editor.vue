@@ -133,6 +133,7 @@
   import Subjective from '@/components/question_types/Subjective'
   import RankingText from '@/components/question_types/RankingText'
   import TickHorizontal from '@/components/question_types/TickHorizontal'
+  import TickVertical from '@/components/question_types/TickVertical'
 
   export default {
     components: {
@@ -141,7 +142,8 @@
       StarRating,
       Subjective,
       RankingText,
-      TickHorizontal
+      TickHorizontal,
+      TickVertical
     },
     methods: {
       checkAdd (e) {
@@ -173,6 +175,10 @@
           this.workplace.push({
             id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'
           })
+        } else if (id==7) {
+          this.workplace.push({
+            id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: 'TickVertical'
+          })
         }
       }
       // onMove ({relatedContext, draggedContext}) {
@@ -197,7 +203,7 @@
           { id: 5, title: '주관식형', comp: 'Subjective' },
           { header: '척도형'},
           { id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'},
-          { id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: null},
+          { id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: 'TickVertical'},
           { id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: null}
         ],
         workplace: [

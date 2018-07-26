@@ -52,16 +52,7 @@
         <v-tab-item>
           <v-card>
             <v-container>
-              <v-layout wrap justify-center>
-                <v-flex xs6>
-                  <v-switch
-                    label="중복 선택 가능"
-                    v-model="multiselectSwitch"
-                  ></v-switch>
-                </v-flex>
-                <v-flex xs4>
-                  <v-text-field :disabled="!multiselectSwitch" v-model="multiselectMax" type="number"></v-text-field>
-                </v-flex>
+              <v-layout wrap justify-center align-center>
                 <v-flex xs6>
                   <v-switch
                     label="멀티미디어형"
@@ -234,9 +225,7 @@ export default {
       options2: ["이상", "이하"],
       logicOption: ["다음문항", "자격박탈", "설문 종료", "3.lorem..."],
       radioOptions: ["0", "1", "2"],
-      multiselectSwitch: false,
       multimediaSwitch: false,
-      multiselectMax: 0,
       qTitle: null,
       panel: [true],
       active: null,

@@ -33,7 +33,7 @@
         <v-tab-item>
           <v-card>
             <v-container>
-              <v-layout wrap justify-center>                
+              <v-layout wrap justify-center align-center>                
                 <v-flex xs6>
                   <v-switch
                     label="멀티미디어형"
