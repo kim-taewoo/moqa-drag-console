@@ -3,10 +3,10 @@
     
 
     <v-layout fill-height>     
-        <v-flex v-if="drawer" class="xs2">
-          <v-layout wrap style="max-height:84vh; overflow-y:auto;">
-            <v-flex class="xs12">
-              <v-card id="edit-console" class="ma-2 pa-2" tile>
+        <v-flex v-if="drawer" class="cardDrawer">
+          <v-layout wrap >
+            <v-flex class="xs12" style="position: relative">
+              <v-card id="edit-console" class="ma-2 pa-2 card-collection" >
                 <v-flex xs12>
                   <h2 class="primary--text text--darken-2 mx-1">질문 카드</h2>
                 </v-flex>
@@ -19,17 +19,17 @@
                   xs12 
                   element="v-flex" 
                   v-model="types" 
+                  :move="checkMove"
                   :options="{
-                    draggable: '.drag-item', 
                     sort: false, 
                     ghostClass:'ghost', 
                     group: { name: 'question_cards', pull: 'clone', put: false}}"
                   >
-                    <template v-for="type in types">
-                      <v-subheader v-if="type.header" :key="type.header" class="mt-2 pl-1" style="height:24px">{{ type.header }}</v-subheader>
+                    <template v-for="(type,index) in types">
+                      <v-subheader v-if="type.header" :key="index" class="mt-2 pl-1" style="height:24px">{{ type.header }}</v-subheader>
                       <v-card 
                         v-else-if="type.title" 
-                        :key="type.id"
+                        :key="type.order"
                         :id="type.id"
                         class="mx-1 my-2 pa-2 drag-item question-card"
                         hover>
@@ -39,29 +39,14 @@
                           <v-icon>help_outline</v-icon>
                         </v-card-title>
                       </v-card>
-                      <!-- <v-divider v-else-if="type.divider" :key="index"></v-divider> -->
                     </template>
-
-                  <!-- <v-card 
-                    :id="type.id"                   
-                    class="mx-1 my-2 pa-2 drag-item" 
-                    text
-                    hover
-                    v-for="(type, index) in types" :key="index" 
-                    style="cursor:pointer;"
-                  >
-                    <v-card-title class="py-0 px-1">
-                      <v-icon>add</v-icon>
-                      <div class="title">{{ type.title }}</div>
-                    </v-card-title>
-                  </v-card> -->
                 </draggable>
               </v-card>
             </v-flex>
           </v-layout>
         </v-flex>
 
-      <v-flex class="xs10 main-workplace-layout" :xs12="!drawer">
+      <v-flex class="main-workplace-layout" :class="drawer ? 'xs10':'xs12'">
         <v-layout wrap fill-height>
           <v-flex xs12>
             <v-card id="main-workplace" class="ma-2" height="100%" tile>
@@ -71,7 +56,7 @@
               <v-layout justify-center class="grey lighten-5">
                 <v-flex xs12 sm7 md7 lg5 class="text-xs-center">
                   <draggable
-                    @change="checkAdd" 
+                    @add="checkAdd" 
                     class="main-workplace"
                     v-model="workplace" 
                     :options="{
@@ -83,7 +68,7 @@
                     >
                     <transition-group name="'list-complete'" tag="div" type="transition" class="trans-group">
 
-                      <v-card class="my-3 drag-item workplace-card" v-for="(work,index) in workplace" :key="index">
+                      <v-card class="my-3 drag-item workplace-card" v-for="(work,index) in workplace" :key="'a-'+index">
                         <component :is="work.comp" :questionIndex="index"></component>
                       </v-card>
 
@@ -108,7 +93,7 @@
                     <v-card width="380px">
                       <v-layout wrap>
                         <template v-for="(type, index) in types" >
-                          <v-flex xs6 v-if="type.title" :key="index" >
+                          <v-flex xs6 v-if="type.title" :key="'b-'+index" >
                             <v-btn flat v-html="type.title" @click="addCard(type.id)"></v-btn>
                           </v-flex>
                         </template>
@@ -129,28 +114,33 @@
 <script>
   import draggable from 'vuedraggable'
   import MultipleText from '@/components/question_types/MultipleText'
+  import MultipleImage from '@/components/question_types/MultipleImage'
   import StarRating from '@/components/question_types/StarRating'
   import Subjective from '@/components/question_types/Subjective'
   import RankingText from '@/components/question_types/RankingText'
+  import RankingImage from '@/components/question_types/RankingImage'
   import TickHorizontal from '@/components/question_types/TickHorizontal'
   import TickVertical from '@/components/question_types/TickVertical'
   import TickCircle from '@/components/question_types/TickCircle'
 
   export default {
+    name: 'Editor',
     components: {
       draggable,
       MultipleText,
+      MultipleImage,
       StarRating,
       Subjective,
       RankingText,
+      RankingImage,
       TickHorizontal,
       TickVertical,
       TickCircle
     },
     methods: {
+      checkMove (e) {
+      },
       checkAdd (e) {
-        console.log(e)
-        console.log(this.workplace)
       },
       next () {
         const active = parseInt(this.active)
@@ -160,6 +150,10 @@
         if (id == 0) {
           this.workplace.push({
             id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'MultipleText'
+          })
+        } else if (id==1) {
+          this.workplace.push({
+            id: 1, title: '객관식 <span class="subText">(이미지)</span>', comp: 'MultipleImage'
           })
         } else if (id==4) {
           this.workplace.push({
@@ -172,6 +166,10 @@
         } else if (id==2) {
           this.workplace.push({
             id: 2, title: '순위 선택형 <span class="subText">(텍스트)</span>', comp: 'RankingText'
+          })
+        } else if (id==3) {
+          this.workplace.push({
+            id: 3, title: '순위 선택형 <span class="subText">(이미지)</span>', comp: 'RankingImage'
           })
         } else if (id==6) {
           this.workplace.push({
@@ -196,21 +194,22 @@
     data () {
       return {
         drawer: true,
+        currentCardNum: 0,
         types: [
-          { header: '객관식' },
-          { id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'MultipleText' },
-          { id: 1, title: '객관식 <span class="subText">(이미지)</span>', comp: null},
-          { header: '순위 선택형'},
-          { id: 2, title: '순위 선택형 <span class="subText">(텍스트)</span>', comp: 'RankingText'},
-          { id: 3, title: '순위 선택형 <span class="subText">(이미지)</span>', comp: null},
-          { header: '별점형'},
-          { id: 4, title: '별점형', comp: 'StarRating' },
-          { header: '주관식형'},
-          { id: 5, title: '주관식형', comp: 'Subjective' },
-          { header: '척도형'},
-          { id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'},
-          { id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: 'TickVertical'},
-          { id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: 'TickCircle'}
+          { order: 0, header: '객관식' },
+          { order: 1, id: 0, title: '객관식 <span class="subText">(텍스트)</span>', comp: 'MultipleText' },
+          { order: 2, id: 1, title: '객관식 <span class="subText">(이미지)</span>', comp: 'MultipleImage'},
+          { order: 3, header: '순위 선택형'},
+          { order: 4, id: 2, title: '순위 선택형 <span class="subText">(텍스트)</span>', comp: 'RankingText'},
+          { order: 5, id: 3, title: '순위 선택형 <span class="subText">(이미지)</span>', comp: 'RankingImage'},
+          { order: 6, header: '별점형'},
+          { order: 7, id: 4, title: '별점형', comp: 'StarRating' },
+          { order: 8, header: '주관식형'},
+          { order: 9, id: 5, title: '주관식형', comp: 'Subjective' },
+          { order: 10, header: '척도형'},
+          { order: 11, id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'},
+          { order: 12, id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: 'TickVertical'},
+          { order: 13, id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: 'TickCircle'}
         ],
         workplace: [
         ],
@@ -253,10 +252,17 @@
     transition: .3s cubic-bezier(.25,.8,.5,1)
   }
   .main-workplace-layout {
-    transition: flex-basis 3500ms inline;
+    transition: flex-basis 1000ms ease;
   }
-  /* .workplaceSpan {
-    flex-basis: 100% !important;
-    max-width: 100% !important;
-  } */
+  .cardDrawer {
+    min-width: 280px;
+  }
+  .card-collection {
+    position: sticky;
+    top: 55px;
+    left: 0;
+    min-width: 280px;
+    max-height: 80vh;
+    overflow: auto;
+  }
 </style>
