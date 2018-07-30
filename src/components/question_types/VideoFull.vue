@@ -7,13 +7,22 @@
           <v-container>
               <v-layout wrap justify-center>
                   <v-flex xs10 class="text-xs-center">
-                      <v-flex class="xs12">
-                        <video id="video" width="320" height="240" controls></video>
+                      <v-flex v-if="videoUrl" class="xs12">
+                        <video id="video" :src="videoUrl" width="320" height="240" controls></video>
                       </v-flex>
-                      <v-btn @click="onPickFile" dark class="amber">
-                          동영상 업로드 <v-icon right dark>cloud_upload</v-icon>
-                      </v-btn>
-                      <input type="file" style="display:none;" ref="fileInput" accept="video/*" @change="onFilePicked">
+                      <v-flex xs12 v-if="youtubeLink">
+                        <iframe width="100%" :src="'https://www.youtube.com/embed/'+embed" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      </v-flex>
+                      <v-flex class="xs10" offset-xs1>
+                        <v-text-field v-model="youtubeLink" label="Youtube 링크" hint="http://youtube.be/XXX"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <span class="mr-3">또는,</span>
+                        <v-btn @click="onPickFile" dark class="amber">
+                            동영상 업로드 <v-icon right dark>cloud_upload</v-icon>
+                        </v-btn>
+                        <input type="file" style="display:none;" ref="fileInput" accept="video/*" @change="onFilePicked">
+                      </v-flex>
                   </v-flex>
                   <v-flex xs10>
                       <v-text-field label="설명" v-model="qTitle"></v-text-field>
@@ -36,7 +45,16 @@
         panel: [true],
         qTitle: null,
         active: null,
-        videoUrl: [],
+        videoUrl: null,
+        youtubeLink: '',
+        embed: 'zzzzzafea'
+      }
+    },
+    watch: {
+      youtubeLink (val) {
+        let x = this.youtubeLink.split('/')
+        
+        this.embed = x.splice(3,1)
       }
     },
     methods: {
@@ -60,7 +78,7 @@
           
           const fileReader = new FileReader()
           fileReader.addEventListener('load', () => {
-            video.src = fileReader.result
+            this.videoUrl = fileReader.result
           })
           
 
