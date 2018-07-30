@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Editor from '@/components/Editor'
 import DashBoard from '@/components/DashBoard'
 import BasicSetting from '@/components/BasicSetting'
+import Step1 from '@/components/Step1'
 
 Vue.use(Router)
 
@@ -21,7 +22,13 @@ export default new Router({
     {
       path: '/basic-setting',
       name: 'BasicSetting',
-      component: BasicSetting
+      component: BasicSetting,
+      children: [
+        {
+          path: 'step1',
+          component: Step1
+        }
+      ]
     }
   ]
 })

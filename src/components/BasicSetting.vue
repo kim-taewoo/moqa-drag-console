@@ -31,6 +31,7 @@
           </v-stepper-header>
 
           <v-stepper-items style="height: 100%">
+          
             <v-stepper-content step="1" style="height:100%;">
               <v-container :class="{'pa-0': $vuetify.breakpoint.smAndDown}" grid-list-lg>
                 <v-layout justify-center wrap>

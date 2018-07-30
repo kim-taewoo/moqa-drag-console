@@ -69,7 +69,7 @@
                     <transition-group name="'list-complete'" tag="div" type="transition" class="trans-group">
 
                       <v-card class="my-3 drag-item workplace-card" v-for="(work,index) in workplace" :key="'a-'+index">
-                        <component :is="work.comp" :questionIndex="index"></component>
+                        <component :is="work.comp" :questionIndex="index" class="card-component"></component>
                       </v-card>
 
                     </transition-group>
@@ -122,6 +122,8 @@
   import TickHorizontal from '@/components/question_types/TickHorizontal'
   import TickVertical from '@/components/question_types/TickVertical'
   import TickCircle from '@/components/question_types/TickCircle'
+  import ImageFull from '@/components/question_types/ImageFull'
+  import VideoFull from '@/components/question_types/VideoFull'
 
   export default {
     name: 'Editor',
@@ -135,7 +137,9 @@
       RankingImage,
       TickHorizontal,
       TickVertical,
-      TickCircle
+      TickCircle,
+      ImageFull,
+      VideoFull
     },
     methods: {
       checkMove (e) {
@@ -209,7 +213,10 @@
           { order: 10, header: '척도형'},
           { order: 11, id: 6, title: '척도형 <span class="subText">(가로)</span>', comp: 'TickHorizontal'},
           { order: 12, id: 7, title: '척도형 <span class="subText">(세로)</span>', comp: 'TickVertical'},
-          { order: 13, id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: 'TickCircle'}
+          { order: 13, id: 8, title: '척도형 <span class="subText">(원형)</span>', comp: 'TickCircle'},
+          { order: 14, header: '멀티미디어'},
+          { order: 15, id: 9, title: '이미지 <span class="subText">(Full)</span>', comp: 'ImageFull'},
+          { order: 16, id: 10, title: '동영상 <span class="subText">(Full)</span>', comp: 'VideoFull'}
         ],
         workplace: [
         ],
@@ -262,7 +269,9 @@
     top: 55px;
     left: 0;
     min-width: 280px;
-    max-height: 80vh;
     overflow: auto;
+  }
+  .card-component:focus {
+    outline: yellow;
   }
 </style>
