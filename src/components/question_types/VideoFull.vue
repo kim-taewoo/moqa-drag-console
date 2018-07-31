@@ -11,14 +11,14 @@
                         <video id="video" :src="videoUrl" width="320" height="240" controls></video>
                       </v-flex>
                       <v-flex xs12 v-if="youtubeLink">
-                        <iframe width="100%" :src="'https://www.youtube.com/embed/'+embed" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <iframe width="100%" height="300px" :src="'https://www.youtube.com/embed/'+embed" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                       </v-flex>
                       <v-flex class="xs10" offset-xs1>
-                        <v-text-field v-model="youtubeLink" label="Youtube 링크" hint="http://youtube.be/XXX"></v-text-field>
+                        <v-text-field :disabled="!!videoUrl" v-model="youtubeLink" label="Youtube 링크" hint="http://youtube.be/XXX"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
                         <span class="mr-3">또는,</span>
-                        <v-btn @click="onPickFile" dark class="amber">
+                        <v-btn @click="onPickFile" class="white--text" color="error" :disabled="!!youtubeLink">
                             동영상 업로드 <v-icon right dark>cloud_upload</v-icon>
                         </v-btn>
                         <input type="file" style="display:none;" ref="fileInput" accept="video/*" @change="onFilePicked">
@@ -47,7 +47,7 @@
         active: null,
         videoUrl: null,
         youtubeLink: '',
-        embed: 'zzzzzafea'
+        embed: ''
       }
     },
     watch: {

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Editor from '@/components/Editor'
+import Support from '@/components/Support'
 import DashBoard from '@/components/DashBoard'
 import BasicSetting from '@/components/BasicSetting'
 import Step1 from '@/components/Step1'
@@ -13,6 +14,11 @@ export default new Router({
       path: '/',
       name: 'DashBoard',
       component: DashBoard
+    },
+    {
+      path: '/support',
+      name: 'Support',
+      component: Support
     },
     {
       path: '/edit-form',

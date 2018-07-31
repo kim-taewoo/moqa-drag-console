@@ -10,6 +10,7 @@ import VueCircleSlider from 'vue-circle-slider'
 Vue.use(Vuetify)
 Vue.use(VueCircleSlider)
 
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

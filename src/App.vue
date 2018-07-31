@@ -23,7 +23,7 @@
           <span>대시보드</span>
         </v-tooltip>
         <v-tooltip bottom>
-          <v-btn icon slot="activator">
+          <v-btn icon slot="activator" to="/support">
             <v-icon>contact_support</v-icon>
           </v-btn>
           <span>모카에 문의하기</span>

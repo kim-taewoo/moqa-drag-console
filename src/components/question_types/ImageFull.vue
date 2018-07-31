@@ -9,9 +9,7 @@
                   <v-flex xs10 class="text-xs-center">
                       <v-flex class="xs12">
                         <img
-                        v-for="(img,index) in imageUrl"
-                        :key="index"
-                        :src="img"
+                        :src="imageUrl"
                         width="100%"
                         alt="">
                       </v-flex>
@@ -41,7 +39,7 @@
         panel: [true],
         qTitle: null,
         active: null,
-        imageUrl: []
+        imageUrl: null
       }
     },
     methods: {
@@ -58,7 +56,7 @@
           }
           const fileReader = new FileReader()
           fileReader.addEventListener('load', () => {
-              this.imageUrl.push(fileReader.result)
+              this.imageUrl=fileReader.result
           })
           fileReader.readAsDataURL(file)
       }
