@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-layout wrap justify-center>
-            <v-flex xs12 sm8>
+            <v-flex xs12 sm8 lg6>
                 <v-card>
                     <v-container class="main-card">
                         <v-layout align-center>
@@ -75,6 +75,15 @@
                         <v-list-tile-sub-title>주소</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-action>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                        <v-list-tile-title>311 Gangnam-daero, Seocho 2-dong, Seocho-gu, Seoul</v-list-tile-title>
+                        <v-list-tile-sub-title>address</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
                     </v-list>
                 </v-card>
             </v-flex>
@@ -85,7 +94,7 @@
 <script>
 export default {
     name: 'Support',
-    created () {
+    mounted () {
         Kakao.init('c8073948e03369facac56feeb022f17a')
     },
     methods: {

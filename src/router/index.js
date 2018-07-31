@@ -4,6 +4,7 @@ import Editor from '@/components/Editor'
 import Support from '@/components/Support'
 import DashBoard from '@/components/DashBoard'
 import BasicSetting from '@/components/BasicSetting'
+import AddGroup from '@/components/AddGroup'
 import Step1 from '@/components/Step1'
 
 Vue.use(Router)
@@ -14,6 +15,11 @@ export default new Router({
       path: '/',
       name: 'DashBoard',
       component: DashBoard
+    },
+    {
+      path: '/addGroup',
+      name: 'AddGroup',
+      component: AddGroup
     },
     {
       path: '/support',

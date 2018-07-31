@@ -48,6 +48,13 @@
     <v-content style="background: white;">
       <router-view/>
     </v-content>
+    <v-footer app>
+      <v-layout justify-end>
+        <v-flex class="text-xs-right">
+          <span>&copy; 2018 Moqa</span>
+        </v-flex>
+      </v-layout>
+    </v-footer>
   </v-app>
 </template>
 

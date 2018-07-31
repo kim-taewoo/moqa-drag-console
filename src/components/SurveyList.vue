@@ -80,7 +80,8 @@
       </v-flex>
     </v-layout>
     <v-layout justify-center>
-      <v-flex>
+      <v-flex xs12>
+        <v-divider></v-divider>
         <v-data-table
           :headers="headers"
           :items="filteredSurveys"

@@ -1,11 +1,11 @@
 <template>
   <v-container justify-center>
-    <v-layout justify-center>
+    <!-- <v-layout justify-center>
       <v-flex class="text-xs-center notice">
         <span><v-icon>info</v-icon></span>
         <p class="notice-content body-1 ma-0">공지사항: 점검이 있을 예정입니다. <span>2018.09.01</span></p>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
 
     <v-layout class="ma-3">
       <v-flex>
